@@ -117,7 +117,7 @@ code.inline { padding: 1px 5px; color: #9a3412; background: #fff7ed; border-radi
 
 /* recursion tree */
 .tree-box { overflow-x: auto; background: var(--surface-2); border: 1px solid var(--line); border-radius: 12px; }
-.tree-box svg { display: block; min-width: 100%; height: auto; }
+.tree-box svg { display: block; max-width: 100%; height: auto; margin: 0 auto; }
 .tn rect { fill: #fff; stroke: #4b8bbe; stroke-width: 1.5; }
 .tn.is-leaf rect { fill: #fffbea; stroke: #e0b100; }
 .tn text { font: 600 11px var(--mono); fill: var(--ink); text-anchor: middle; }

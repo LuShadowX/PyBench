@@ -57,7 +57,7 @@ export function kv(obj) {
 export function bars(rows, { color, max } = {}) {
     const top = max ?? Math.max(1, ...rows.map(r => r[1]));
     return h('div', { class: 'bars' }, rows.map(([label, value]) => h('div', { class: 'bar-row' },
-        h('span', {}, String(label)), h('div', { class: 'bar' }, h('i', { style: { '--v': `${(100 * value) / top}%`, '--c': color } })), h('b', {}, String(value)))));
+        h('span', {}, String(label)), h('div', { class: 'bar' }, h('i', { style: color ? { '--v': `${(100 * value) / top}%`, '--c': color } : { '--v': `${(100 * value) / top}%` } })), h('b', {}, String(value)))));
 }
 
 export const tile = (label, value, sub) => h('div', { class: 'stat' }, h('span', {}, label), h('b', { class: 'mono' }, value), sub ? h('small', { class: 'muted' }, sub) : null);

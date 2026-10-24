@@ -52,11 +52,11 @@ class Practicals(unittest.TestCase):
 
     def test_files(self):
         lines = p08_read_lines.read_lines(p08_read_lines.DEFAULT)
-        self.assertEqual(len(lines), 6)
+        self.assertEqual(len(lines), 8)
         self.assertIn("File not found", run(p08_read_lines, "no_such_file.txt"))
         with tempfile.TemporaryDirectory() as d:
             kept, removed = p09_remove_a_lines.split_lines(p08_read_lines.DEFAULT, os.path.join(d, "k"), os.path.join(d, "r"))
-            self.assertEqual(kept + removed, 6)
+            self.assertEqual(kept + removed, 8)
             with open(os.path.join(d, "k")) as f:
                 self.assertNotIn("a", f.read().lower())
         stats = p10_char_count.char_stats("Hello World 42")

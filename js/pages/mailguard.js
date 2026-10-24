@@ -84,7 +84,7 @@ export function render(page) {
                     h('span', { class: `badge ${m.verdict === 'phishing' ? 'badge--bad' : m.verdict === 'suspicious' ? 'badge--warn' : 'badge--good'}`, style: { fontSize: '13px' } }, `${m.verdict.toUpperCase()} · ${m.score} / 100`),
                     h('span', { class: 'mono muted', style: { fontSize: '12px' } }, m.name)),
                 h('div', { class: 'gauge' }, h('i', { style: { '--v': `${Math.min(99, m.score)}%` } })),
-                h('p', { class: 'hdr', style: { marginTop: '12px' } }, `From: ${m.sender}\nSubject: ${m.subject}\nDate: ${m.date}`.split('\n').flatMap((l, i) => [i ? h('br') : null, l])),
+                h('p', { class: 'hdr', style: { marginTop: '12px' } }, [`From: ${m.sender}`, `Subject: ${m.subject}`, m.date && `Date: ${m.date}`].filter(Boolean).flatMap((l, i) => [i ? h('br') : null, l])),
                 h('p', { class: 'bodytext', html: body })),
             card(`Why (${m.findings.length} findings)`, m.findings.length ? h('ul', { class: 'findings' }, m.findings.map(([rule, pts, detail]) => h('li', {}, h('b', {}, `+${pts}`), h('div', {}, detail, h('small', {}, rule))))) : h('p', { class: 'muted' }, 'No rule fired. This mail looks safe.')));
     }

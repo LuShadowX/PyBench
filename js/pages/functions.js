@@ -97,7 +97,7 @@ function drawTree(root) {
     let depth = 0;
     const walk = (n, f) => { f(n); n.kids.forEach(k => walk(k, f)); };
     walk(tree, n => { depth = Math.max(depth, n.y); });
-    const svg = s('svg', { viewBox: `-6 -6 ${width + 12} ${depth + H + 30}`, width: Math.max(300, width + 12) });
+    const svg = s('svg', { viewBox: `-6 -6 ${width + 12} ${depth + H + 12}`, width: (width + 12) * 1.25 });
     walk(tree, n => n.kids.forEach(k => svg.append(s('path', { class: 'te', d: `M${n.x + W / 2} ${n.y + H} C${n.x + W / 2} ${n.y + H + 18} ${k.x + W / 2} ${k.y - 18} ${k.x + W / 2} ${k.y}` }))));
     walk(tree, n => svg.append(s('g', { class: `tn${n.kids.length ? '' : ' is-leaf'}`, transform: `translate(${n.x} ${n.y})` },
         s('rect', { width: W, height: H, rx: 7 }), s('text', { x: W / 2, y: 13 }, n.label), s('text', { class: 'tn-val', x: W / 2, y: 25 }, `= ${n.value}`))));
