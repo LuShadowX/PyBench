@@ -1,0 +1,6 @@
+Python was created by Guido van Rossum and first released in 1991.
+It is named after Monty Python, not after the snake.
+Readability counts, so Python uses indentation instead of braces.
+A program is a sequence of instructions that tells a computer what to do.
+Files let a program remember data after it stops running.
+Every Python object has a type, a value and an identity.

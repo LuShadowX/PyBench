@@ -1,0 +1,7 @@
+From: Aman <aman.k@gmail.com>
+To: lukshya@gmail.com
+Subject: notes for python practical
+Date: Wed, 21 Oct 2026 21:30:00 +0530
+
+hey, can you send me the file handling programs from today's lab? I missed the last part about pickle.
+also are we meeting in the library tomorrow at 4?

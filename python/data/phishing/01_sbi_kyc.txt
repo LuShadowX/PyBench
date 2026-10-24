@@ -1,0 +1,17 @@
+From: SBI Alerts <alerts@sbi-kyc-update.in>
+To: customer@gmail.com
+Subject: URGENT: Your SBI account will be blocked today
+Date: Mon, 12 Oct 2026 09:14:00 +0530
+
+Dear Customer,
+
+Your SBI YONO account will be blocked within 24 hours because your KYC is not updated.
+To avoid suspension update your PAN card and Aadhaar details immediately using the link below.
+
+http://sbi-kyc-update.in/verify/login.php
+
+You will need your account number, debit card number and OTP to complete the process.
+Failure to verify now will lead to permanent deactivation of your account.
+
+Regards,
+SBI Customer Care

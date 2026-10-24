@@ -1,0 +1,13 @@
+From: DHL Express <noreply@dhl-parcel-track.info>
+To: you@gmail.com
+Subject: Your parcel is on hold - action required
+Date: Sat, 17 Oct 2026 13:22:00 +0530
+
+Dear customer,
+
+Your parcel could not be delivered because of unpaid customs duty of Rs 149.
+Download the attached invoice Invoice_DHL_8832.zip and pay within 24 hours or the parcel will be returned.
+
+http://dhl-parcel-track.info/pay
+
+DHL Express

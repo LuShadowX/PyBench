@@ -1,0 +1,13 @@
+From: Amazon Refunds <refund@amazon-secure-refund.co>
+To: shopper@gmail.com
+Subject: Refund of Rs 2,349 is waiting for you
+Date: Fri, 16 Oct 2026 10:05:00 +0530
+
+Hello,
+
+Your refund of Rs 2,349 for order 402-7718 could not be credited. Claim your refund by confirming your
+bank details and login details on our refund page.
+
+https://amazon-secure-refund.co/claim?id=7718
+
+Amazon Customer Service

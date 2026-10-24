@@ -1,0 +1,14 @@
+From: Netflix Billing <billing@netf1ix-support.com>
+To: user@gmail.com
+Subject: Your membership has been suspended
+Date: Wed, 14 Oct 2026 07:02:00 +0530
+
+Hi,
+
+We were unable to process your last payment and your Netflix membership has been suspended.
+Please update your card number and CVV within 24 hours to keep watching.
+
+https://bit.ly/nf-billing-update
+
+Thanks,
+The Netflix Team

@@ -1,0 +1,12 @@
+From: GitHub <noreply@github.com>
+To: lukshya@gmail.com
+Subject: [GitHub] A new SSH key was added to your account
+Date: Thu, 22 Oct 2026 09:12:00 +0530
+
+Hey LuShadowX,
+
+A new SSH key was added to your account. If you added this key you can ignore this email.
+If you did not, review your keys at https://github.com/settings/keys
+
+Thanks,
+The GitHub Team
