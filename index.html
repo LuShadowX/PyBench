@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyBench | Python programming workbench</title>
+    <meta name="description" content="PyBench is a Python workbench that runs real Python in the browser: variables and operators, conditions and loops, strings, lists, tuples, dictionaries, functions and recursion, classes and inheritance, files, pickle, exceptions, regular expressions, the 15 INT108 lab practicals and MailGuard, a phishing mail analyser.">
+    <meta name="theme-color" content="#0f1b2d">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+    <noscript><p style="padding:20px">PyBench runs Python inside the page, so it needs JavaScript turned on.</p></noscript>
+    <div class="shell">
+        <aside class="side" id="side" aria-label="Topics">
+            <a class="brand" href="#/home">
+                <span class="brand__logo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M13.5 4l-3 16"/></svg></span>
+                <span><b>PyBench</b><small>PYTHON WORKBENCH</small></span>
+            </a>
+            <nav id="nav"></nav>
+        </aside>
+        <div class="main">
+            <header class="topbar">
+                <button type="button" class="topbar__menu" id="menu-button" aria-controls="side" aria-expanded="false">☰ Topics</button>
+                <div class="crumbs" id="crumbs"></div>
+                <div class="topbar__tags" id="tags"></div>
+                <button type="button" class="py-status" id="py-status" title="Python runs in your browser (Pyodide). Click to restart it.">
+                    <i></i><span>Python not started</span>
+                </button>
+            </header>
+            <main class="page" id="page" tabindex="-1"></main>
+        </div>
+    </div>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
