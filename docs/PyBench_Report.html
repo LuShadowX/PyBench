@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>PyBench | INT108 Python Programming Project Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+    :root { --ink: #11110f; --muted: #57534b; --faint: #8e897e; --line: #11110f1f; --accent: #2f6b9a; --paper: #f5f2ea; --code: #1b1b19; --green: #2f7a46; }
+    @page { size: A4; margin: 15mm 14mm 16mm; }
+    @page :first { margin: 0; }
+    * { box-sizing: border-box; }
+    html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    body { margin: 0; color: var(--ink); font: 9.6pt/1.55 'Inter', -apple-system, 'Segoe UI', sans-serif; }
+    h1, h2, h3, h4 { letter-spacing: -0.02em; line-height: 1.2; break-after: avoid; }
+    h2 { margin: 0 0 12px; font-size: 20pt; font-weight: 800; letter-spacing: -0.035em; }
+    h3 { margin: 20px 0 6px; font-size: 12pt; font-weight: 700; }
+    h4 { margin: 14px 0 4px; font-size: 10pt; font-weight: 700; }
+    p { margin: 0 0 8px; }
+    a { color: var(--ink); }
+    ul, ol { margin: 4px 0 10px; padding-left: 18px; }
+    li { margin-bottom: 3px; }
+    code { padding: 0.5px 4px; background: #11110f0f; border-radius: 3px; font: 8pt 'JetBrains Mono', ui-monospace, monospace; }
+    b, strong { font-weight: 650; }
+
+    .chapter { break-before: page; }
+    .kicker { margin: 0 0 6px; color: var(--accent); font: 600 7.5pt/1 'JetBrains Mono', monospace; letter-spacing: 0.16em; text-transform: uppercase; }
+    .lead { max-width: 160mm; margin-bottom: 14px; color: var(--muted); font-size: 10.6pt; line-height: 1.55; }
+
+    table { width: 100%; margin: 8px 0 14px; border-collapse: collapse; font-size: 8.5pt; }
+    th, td { padding: 5.5px 7px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
+    thead th { color: var(--muted); font: 600 7pt/1.3 'JetBrains Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1.5px solid var(--ink); }
+    tbody th { font-weight: 650; }
+    tr { break-inside: avoid; }
+    .t-topics tbody th { width: 27%; }
+    .t-topics td:last-child { width: 13%; color: var(--accent); font: 600 7.6pt 'JetBrains Mono', monospace; white-space: nowrap; }
+    .ok { color: var(--green); font-weight: 700; }
+
+    figure { margin: 6px 0 14px; break-inside: avoid; }
+    figure img { display: block; width: 100%; border: 1px solid var(--line); border-radius: 6px; }
+    figcaption { margin-top: 5px; color: var(--muted); font-size: 8pt; line-height: 1.45; }
+    figcaption b { color: var(--ink); }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; align-items: start; }
+    .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 10px; align-items: start; }
+    .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0 10px; align-items: start; }
+    .fig-phone { max-width: 70mm; }
+    .fig-phone img { max-height: 125mm; object-fit: cover; object-position: top; }
+    .fig-tall img { max-height: 150mm; object-fit: cover; object-position: top; }
+    .fig-short img { max-height: 95mm; object-fit: cover; object-position: top; }
+
+    pre { margin: 6px 0 12px; padding: 10px 12px; overflow: hidden; color: #ecebe6; background: var(--code); border-radius: 6px; font: 7.4pt/1.5 'JetBrains Mono', ui-monospace, monospace; white-space: pre-wrap; break-inside: avoid; }
+    pre .file { display: block; margin-bottom: 6px; color: #7dd3e6; font-weight: 600; }
+    .walk { display: grid; grid-template-columns: 1.15fr 1fr; gap: 14px; align-items: start; break-inside: avoid; margin-bottom: 6px; }
+    .walk pre { margin-top: 0; }
+    .walk p, .walk li { font-size: 8.8pt; }
+    .tags { margin: 6px 0 0; }
+    .tag { display: inline-block; margin: 0 4px 4px 0; padding: 1.5px 7px; color: var(--accent); background: #2f6b9a14; border-radius: 99px; font: 600 7pt 'JetBrains Mono', monospace; }
+
+    .note { margin: 8px 0 12px; padding: 9px 12px; background: var(--paper); border-left: 3px solid var(--accent); border-radius: 0 6px 6px 0; font-size: 9pt; }
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 12px 0 16px; }
+    .stat { padding: 12px; background: var(--paper); border-radius: 8px; }
+    .stat b { display: block; font-size: 19pt; font-weight: 800; letter-spacing: -0.04em; line-height: 1.1; }
+    .stat span { color: var(--muted); font-size: 8pt; }
+    .co-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 10px 0 14px; }
+    .co-card { padding: 10px 11px; background: var(--paper); border-radius: 8px; font-size: 8.4pt; break-inside: avoid; }
+    .co-card b { display: block; margin-bottom: 2px; color: var(--accent); font: 700 8.5pt 'JetBrains Mono', monospace; }
+    .co-card em { display: block; margin-top: 5px; color: var(--muted); font-style: normal; font-size: 7.8pt; }
+    .prac { padding: 12px 0 4px; border-top: 1.5px solid var(--ink); break-inside: avoid; }
+    .prac h4 { margin: 0 0 4px; }
+    .prac h4 span { color: var(--accent); font-family: 'JetBrains Mono', monospace; margin-right: 6px; }
+    .toc { columns: 2; column-gap: 14mm; margin-top: 10px; padding: 0; list-style: none; }
+    .toc li { display: flex; gap: 10px; margin-bottom: 9px; padding-bottom: 7px; border-bottom: 1px solid var(--line); break-inside: avoid; font-size: 10pt; font-weight: 600; }
+    .toc li span { color: var(--accent); font: 600 9pt 'JetBrains Mono', monospace; }
+    .toc li small { display: block; color: var(--muted); font-weight: 400; font-size: 8.2pt; }
+
+    /* cover */
+    .cover { position: relative; height: 297mm; padding: 18mm 16mm 16mm; overflow: hidden; color: #f2f0e9; background: #0d0d0c; break-after: page; }
+    .cover__top { display: flex; justify-content: space-between; color: #f2f0e999; font: 600 7.5pt/1 'JetBrains Mono', monospace; letter-spacing: 0.16em; text-transform: uppercase; }
+    .cover h1 { margin: 22mm 0 6mm; font-size: 62pt; font-weight: 800; letter-spacing: -0.06em; line-height: 0.9; }
+    .cover h1 span { color: var(--accent); }
+    .cover__sub { max-width: 140mm; margin: 0 0 10mm; color: #f2f0e9cc; font-size: 12.5pt; line-height: 1.5; }
+    .cover__shot { width: 100%; height: 92mm; object-fit: cover; object-position: top; border-radius: 8px; border: 1px solid #ffffff1f; }
+    .cover dl { position: absolute; left: 16mm; right: 16mm; bottom: 16mm; display: grid; grid-template-columns: 38mm 1fr 38mm 1fr; gap: 8px 10px; margin: 0; padding-top: 14px; border-top: 1px solid #f2f0e94d; font-size: 9pt; }
+    .cover dt { color: #f2f0e980; font: 600 7pt/1.8 'JetBrains Mono', monospace; letter-spacing: 0.1em; text-transform: uppercase; }
+    .cover dd { margin: 0; }
+    .cover a { color: #f2f0e9; }
+    .blank { display: inline-block; min-width: 40mm; border-bottom: 1px solid #f2f0e980; }
+
+    .diagram { margin: 6px 0 14px; padding: 12px; background: var(--paper); border-radius: 8px; break-inside: avoid; }
+    .diagram svg { display: block; width: 100%; height: auto; }
+    .cover h1 span { color: #ffd43b; }
+    .t-map tbody th { width: 30%; }
+    .t-map td.where { width: 26%; color: var(--accent); font: 600 7.6pt 'JetBrains Mono', monospace; }
+    .prac .meta { color: var(--muted); font-size: 8pt; }
+    .prac pre { max-height: none; }
+    .two { columns: 2; column-gap: 12px; }
+    .two .prac { break-inside: avoid; }
+    .walk { grid-template-columns: 1fr; gap: 2px; break-inside: auto; margin-bottom: 10px; }
+    .walk pre { margin-bottom: 4px; font-size: 7pt; }
+    .walk > div { columns: 2; column-gap: 12px; }
+    pre.term { color: #e6e9f2; background: #161b26; }
+    pre, code { font-variant-ligatures: none; }
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<section class="cover">
+    <div class="cover__top"><span>INT108 · Python Programming</span><span>Project report</span></div>
+    <h1>Py<span>Bench</span></h1>
+    <p class="cover__sub">A Python workbench that runs real Python in the browser. Every topic of the six INT108 units has a page with code you can edit and run, alongside small tools written in Python. It also has all fifteen lab practicals and MailGuard, a phishing mail analyser that brings every unit together.</p>
+    <img class="cover__shot" src="images/home.png" alt="">
+    <dl>
+        <dt>Student</dt><dd>Lukshya Singh Supyal</dd>
+        <dt>Registration no.</dt><dd><span class="blank">&nbsp;</span></dd>
+        <dt>Programme</dt><dd>B.Tech CSE, Semester 5</dd>
+        <dt>Course</dt><dd>INT108 Python Programming (L:3 T:0 P:2, session 2026-27)</dd>
+        <dt>Live website</dt><dd><a href="https://lushadowx.github.io/PyBench/">lushadowx.github.io/PyBench</a></dd>
+        <dt>Source code</dt><dd><a href="https://github.com/LuShadowX/PyBench">github.com/LuShadowX/PyBench</a></dd>
+    </dl>
+</section>
+
+<!-- ============ CONTENTS ============ -->
+<section>
+    <p class="kicker">Contents</p>
+    <h2>What's in this report</h2>
+    <ol class="toc">
+        <li><span>01</span><div>Project overview<small>Idea, sections, numbers</small></div></li>
+        <li><span>02</span><div>How it's built<small>Python in the browser, files</small></div></li>
+        <li><span>03</span><div>Home, course map and shell<small>Finding your way</small></div></li>
+        <li><span>04</span><div>Unit I<small>Environment, variables, expressions</small></div></li>
+        <li><span>05</span><div>Unit II<small>Conditions and loops</small></div></li>
+        <li><span>06</span><div>Unit III<small>Strings, lists, tuples, dictionaries</small></div></li>
+        <li><span>07</span><div>Unit IV<small>Functions and recursion</small></div></li>
+        <li><span>08</span><div>Unit V<small>Classes and OOP</small></div></li>
+        <li><span>09</span><div>Unit VI<small>Files, exceptions, regular expressions</small></div></li>
+        <li><span>10</span><div>The 15 practicals<small>Every program with a real run</small></div></li>
+        <li><span>11</span><div>MailGuard<small>The mini project and its notebook</small></div></li>
+        <li><span>12</span><div>Syllabus and CO mapping<small>All 73 topics, 6 COs</small></div></li>
+        <li><span>13</span><div>Code walkthrough<small>How the important parts work</small></div></li>
+        <li><span>14</span><div>Testing<small>What was checked and the results</small></div></li>
+        <li><span>15</span><div>Deployment and conclusion<small>GitHub Pages, what I learned</small></div></li>
+    </ol>
+    <div class="note" style="margin-top:14px">I took every screenshot in this report from PyBench while using it. The outputs in them come from real runs of the Python code. Every code extract is copied from the source files, with the file name and line numbers. The practical outputs in chapter 10 come from running the files on my laptop.</div>
+    <h3>Course and scope</h3>
+    <p>The project follows the INT108 Python Programming syllabus for session 2026-27, the current version on the university notes site; I found no other code or version for this course. All six units, all six course outcomes and all fifteen experiments from the list of practicals are covered. Chapters 04 to 09 go through the syllabus unit by unit, chapter 10 has the practicals and chapter 12 maps every single topic to the page and tab that covers it.</p>
+    <h3>Course outcomes</h3>
+    <div class="co-cards">
+        <div class="co-card"><b>CO1</b>describe the installation of python environment and basics of Python language<em>Chapters 03, 04 · practical 1</em></div>
+        <div class="co-card"><b>CO2</b>apply the conditional and iterative statements for evaluating the appropriate alternates<em>Chapter 05 · practicals 2–5, 12</em></div>
+        <div class="co-card"><b>CO3</b>explore functions, including recursion, with parameters and arguments in Python<em>Chapter 07 · practical 7</em></div>
+        <div class="co-card"><b>CO4</b>construct the core data structures like lists, dictionaries, tuples and sets to store, process and sort the data<em>Chapter 06 · practicals 6, 13, 14</em></div>
+        <div class="co-card"><b>CO5</b>apply the concepts of object-oriented programming using encapsulation, polymorphism and inheritance<em>Chapters 08, 11 · practical 13</em></div>
+        <div class="co-card"><b>CO6</b>examine file handling operations and effectively apply regular expressions for pattern matching<em>Chapters 09, 11 · practicals 8–11, 14, 15</em></div>
+    </div>
+</section>
+
+<!-- ============ 01 OVERVIEW ============ -->
+<section class="chapter">
+    <p class="kicker">01 · Project overview</p>
+    <h2>Learn Python by running it</h2>
+    <p class="lead">Notes on Python usually show a program and its output side by side. PyBench lets you change the program and see the new output straight away. Every page is a short explanation followed by working code. Next to the code are small tools that show what Python is doing: an expression stepper for the order of operations, a loop tracer, a slice visualizer, a recursion tree, a regex tester and a file explorer. The tools are written in Python too, and the page calls them.</p>
+    <div class="stats">
+        <div class="stat"><b>6 / 6</b><span>units, 73 syllabus topics mapped</span></div>
+        <div class="stat"><b>15</b><span>lab practicals, runnable with your input</span></div>
+        <div class="stat"><b>49</b><span>tabs on 15 pages, over 100 code cells</span></div>
+        <div class="stat"><b>~5,600</b><span>lines: 2,367 Python, 3,250 JS / HTML / CSS</span></div>
+    </div>
+    <h3>Sections</h3>
+    <table>
+        <thead><tr><th>Section</th><th>Pages and tabs</th><th>Syllabus</th></tr></thead>
+        <tbody>
+            <tr><th>Unit I · Basics</th><td>Setting up Python (versions, Windows, Hello World, tools) · Variables &amp; expressions (names, types, operators and order, strings, comments)</td><td>Unit I · CO1</td></tr>
+            <tr><th>Unit II · Control flow</th><td>Conditions &amp; loops: modulus, Boolean logic, conditionals, random numbers, while and for, loop tracer, encapsulation and generalization</td><td>Unit II · CO2</td></tr>
+            <tr><th>Unit III · Data</th><td>Strings (5 tabs) · Lists, tuples &amp; dicts (lists, nested lists, tuples, dictionaries, sparse matrices, aliasing, sets and sorting)</td><td>Unit III · CO4</td></tr>
+            <tr><th>Unit IV · Functions</th><td>Calls and conversion, math, adding new functions, parameters and arguments, recursion, uses of recursion</td><td>Unit IV · CO3</td></tr>
+            <tr><th>Unit V · OOP</th><td>Classes and objects, attributes, inheritance and overriding, data hiding, overloading</td><td>Unit V · CO5</td></tr>
+            <tr><th>Unit VI · Files &amp; regex</th><td>Files &amp; exceptions (text files, variables, directories, pickling, exceptions, file explorer) · Regular expressions (concept, tester, match, types, web scraping)</td><td>Unit VI · CO6</td></tr>
+            <tr><th>Lab</th><td>The 15 practicals with aim, code, input, output and viva questions · Lab record · MailGuard project</td><td>List of practicals · all COs</td></tr>
+            <tr><th>Start</th><td>Home · Course map · Python shell (REPL)</td><td>CO1</td></tr>
+        </tbody>
+    </table>
+    <h3>What makes it more than a set of notes</h3>
+    <ul>
+        <li><b>It is real Python.</b> The site runs CPython 3.12 compiled to WebAssembly (Pyodide). The <code>.py</code> files in the repository are copied into the browser's Python when it starts, so the practicals and tools run exactly the code that is in the project.</li>
+        <li><b>The same code runs on a computer.</b> <code>python -m pybench</code> opens a menu with the unit demos, the practicals and MailGuard. <code>python -m unittest</code> runs 46 tests, and everything uses only the standard library.</li>
+        <li><b>The tools explain Python with Python.</b> The expression stepper parses your expression with the <code>ast</code> module. The loop tracer records every executed line with <code>sys.settrace</code>. The recursion tree is built by a recursive function.</li>
+        <li><b>A small real project.</b> MailGuard grew out of practical 14. It reads mails from files, applies six rule classes and explains its score, and it has a Kaggle / Jupyter notebook version with tables and charts.</li>
+    </ul>
+</section>
+
+<!-- ============ 02 ARCHITECTURE ============ -->
+<section class="chapter">
+    <p class="kicker">02 · How it's built</p>
+    <h2>Python in the browser</h2>
+    <p class="lead">The site is plain HTML, CSS and JavaScript modules with no framework and no build step, hosted on GitHub Pages. Python runs in a Web Worker, so a long or endless loop never freezes the page. The page sends code to the worker, and the worker sends back what it printed.</p>
+    <div class="diagram">
+        <svg viewBox="0 0 760 300" font-family="Inter, sans-serif" font-size="11">
+            <rect x="10" y="10" width="740" height="44" rx="10" fill="#2f6b9a"/><text x="380" y="37" text-anchor="middle" fill="#fff" font-weight="700">15 pages, ES modules loaded on demand: Setup · Basics · Control · Strings · Collections · … · MailGuard</text>
+            <rect x="10" y="64" width="360" height="40" rx="10" fill="#1f4f75"/><text x="190" y="89" text-anchor="middle" fill="#fff" font-weight="700">main.js: sidebar, router, unit tags</text>
+            <rect x="390" y="64" width="360" height="40" rx="10" fill="#1f4f75"/><text x="570" y="89" text-anchor="middle" fill="#fff" font-weight="700">cell.js: editor, highlighting, input, output</text>
+            <rect x="10" y="114" width="740" height="40" rx="10" fill="#e0b100"/><text x="380" y="139" text-anchor="middle" fill="#0f1b2d" font-weight="700">py.js: run · runFile · call(module, fn, args) · repl · fs   (10 s timeout → restart)</text>
+            <path d="M380 154 v18" stroke="#0f1b2d" stroke-width="2"/><text x="392" y="168" fill="#475569">postMessage</text>
+            <rect x="10" y="176" width="740" height="56" rx="10" fill="#0f1b2d"/><text x="380" y="198" text-anchor="middle" fill="#ffd43b" font-weight="700">py-worker.js (Web Worker) · Pyodide = CPython 3.12 in WebAssembly</text><text x="380" y="218" text-anchor="middle" fill="#e2e8f0">_pb_run: captures output, feeds input() from the Input box · in-memory file system</text>
+            <rect x="10" y="242" width="360" height="48" rx="10" fill="#475569"/><text x="190" y="263" text-anchor="middle" fill="#fff" font-weight="700">/home/pyodide/app = python/ from the repo</text><text x="190" y="280" text-anchor="middle" fill="#fff">pybench/, practicals/, data/</text>
+            <rect x="390" y="242" width="360" height="48" rx="10" fill="#475569"/><text x="570" y="263" text-anchor="middle" fill="#fff" font-weight="700">/home/pyodide/work = your files</text><text x="570" y="280" text-anchor="middle" fill="#fff">notes.txt, record.pkl, students.dat …</text>
+        </svg>
+    </div>
+    <h3>Files</h3>
+    <table>
+        <thead><tr><th>File</th><th>Job</th><th>Lines</th></tr></thead>
+        <tbody>
+            <tr><th><code>python/pybench/unit1_basics.py</code></th><td>environment info, name checker, NameError helper, type inspector, expression stepper, string operations, comment counter</td><td>168</td></tr>
+            <tr><th><code>python/pybench/unit2_control.py</code></th><td>modulus facts, clock, truth tables, grade / ticket / leap year, dice, guess game, Monte Carlo π, patterns, primes, loop tracer</td><td>219</td></tr>
+            <tr><th><code>python/pybench/unit3_data.py</code></th><td>traversal, slices, find, counting, comparison, list demos, matrix, tuples, word count, SparseMatrix, aliasing, sets, sorting</td><td>214</td></tr>
+            <tr><th><code>python/pybench/unit4_functions.py</code></th><td>conversion, coercion, math table, parameters, factorial, fib, memo, fast power, Hanoi, recursion tree</td><td>169</td></tr>
+            <tr><th><code>python/pybench/unit5_oop.py</code></th><td>Student, BankAccount, Shape hierarchy, Vector, Calculator</td><td>204</td></tr>
+            <tr><th><code>python/pybench/unit6_files.py</code></th><td>text files, variables, directories, pickle, exceptions, regex patterns and reports, validation, scraping</td><td>192</td></tr>
+            <tr><th><code>python/pybench/mailguard.py</code></th><td>Mail, Rule and six rule subclasses, Finding, Report, MailGuard</td><td>258</td></tr>
+            <tr><th><code>python/practicals/p01 … p15</code></th><td>the fifteen lab programs, each with testable functions and a <code>main()</code></td><td>15 files</td></tr>
+            <tr><th><code>python/tests/</code></th><td>unittest tests for the units, the practicals and MailGuard</td><td>46 tests</td></tr>
+            <tr><th><code>js/core/py-worker.js</code></th><td>loads Pyodide, copies the Python files in, runs code with captured output and fed input, REPL, file access</td><td>155</td></tr>
+            <tr><th><code>js/core/py.js</code></th><td>promise API for the pages, timeouts that restart the worker, Python status</td><td>92</td></tr>
+            <tr><th><code>js/core/cell.js</code></th><td>Python syntax highlighter, editor (highlighted layer under a textarea), runnable cell</td><td>132</td></tr>
+            <tr><th><code>js/pages/*.js</code></th><td>one module per page, 15 in total</td><td>2,054</td></tr>
+            <tr><th><code>notebooks/mailguard_analysis.ipynb</code></th><td>MailGuard with pandas tables and matplotlib charts</td><td>19 cells</td></tr>
+        </tbody>
+    </table>
+</section>
+
+<!-- ============ 03 HOME ============ -->
+<section class="chapter">
+    <p class="kicker">03 · Home, course map and shell</p>
+    <h2>Finding your way</h2>
+    <p class="lead">The sidebar groups the pages by syllabus unit and puts a green dot next to every page you have opened. The top bar shows which unit, course outcome and practical each page covers, plus a status pill for Python. Python starts loading as soon as the site opens and is usually ready in one to two seconds once cached.</p>
+    <figure class=""><img src="images/home.png" alt=""><figcaption><b>Fig. 1</b> · <b>Home.</b> The hero cell is live: it has been run here. Below it are the topic cards, the six course outcomes with links, and a short note on how the site runs Python.</figcaption></figure>
+    <figure class=""><img src="images/shell.png" alt=""><figcaption><b>Fig. 2</b> · <b>Python shell.</b> The interactive interpreter (CO1). Expressions are echoed, a <code>for</code> block continues on "..." lines, variables persist between lines, and errors show a normal traceback.</figcaption></figure>
+</section>
+
+<section>
+    <figure class="fig-tall"><img src="images/map.png" alt=""><figcaption><b>Fig. 3</b> · <b>Course map.</b> Units, topics, COs and practicals counted, the CO table with links, and the first unit's topics, each linked to its page and tab. The full mapping is in chapter 12.</figcaption></figure>
+</section>
+
+<!-- ============ 04 UNIT I ============ -->
+<section class="chapter">
+    <p class="kicker">04 · Unit I</p>
+    <h2>Setting up Python, variables and expressions</h2>
+    <p class="lead">Unit I: Python versions, Python on Windows, running a "Hello World" program. Then naming and using variables, avoiding NameError, values and types, variable names and keywords, statements, operators and operands, order of operations, operations on strings, composition and comments. <span class="tag">CO1</span><span class="tag">Practical 1</span></p>
+    <figure class=""><img src="images/setup-versions.png" alt=""><figcaption><b>Fig. 4</b> · <b>Python versions.</b> The timeline from 0.9 to 3.14, the Python 2 vs 3 differences, and the Python the page is running on, read with <code>sys.version_info</code> by <code>environment()</code>.</figcaption></figure>
+    <figure class=""><img src="images/setup-windows.png" alt=""><figcaption><b>Fig. 5</b> · <b>Python on Windows.</b> The install steps, the installer screen with "Add python.exe to PATH" highlighted, the checks to run in Command Prompt, and fixes for the usual problems.</figcaption></figure>
+</section>
+
+<section>
+    <figure class=""><img src="images/setup-hello.png" alt=""><figcaption><b>Fig. 6</b> · <b>Interactive mode and script mode.</b> In interactive mode the value of each expression is echoed; in a script only what you print() is shown.</figcaption></figure>
+    <figure class=""><img src="images/setup-hello-2.png" alt=""><figcaption><b>Fig. 7</b> · <b>A first program with input().</b> Both input() calls read from the Input box, which also shows what was typed.</figcaption></figure>
+    <figure class=""><img src="images/basics-names.png" alt=""><figcaption><b>Fig. 8</b> · <b>Naming and using variables.</b> The name checker explains why <code>my-name</code> is not allowed. All 35 keywords are listed straight from <code>keyword.kwlist</code>.</figcaption></figure>
+    <div class="grid2">
+        <figure class=""><img src="images/basics-nameerror.png" alt=""><figcaption><b>Fig. 9</b> · <b>Avoiding NameError.</b> Python 3.12 even suggests the right name: "Did you mean: 'score'?"</figcaption></figure>
+    </div>
+</section>
+
+<section>
+    <figure class=""><img src="images/basics-types.png" alt=""><figcaption><b>Fig. 10</b> · <b>Values and types.</b> The type inspector shows the type, identity and mutability of any literal, here a list, next to the table of basic types.</figcaption></figure>
+    <figure class=""><img src="images/basics-typecell.png" alt=""><figcaption><b>Fig. 11</b> · <b>type(), isinstance() and big integers.</b> bool is a kind of int, ints never overflow, and floats are approximate.</figcaption></figure>
+    <figure class=""><img src="images/basics-operators.png" alt=""><figcaption><b>Fig. 12</b> · <b>Order of operations.</b> The expression stepper takes <code>2 + 3 * 4 ** 2 // 5 - 1</code>: ** first, then * and //, then + and −, left to right. The buttons try <code>2 ** 3 ** 2</code> (right to left) and <code>0 and 1 / 0</code> (short-circuit).</figcaption></figure>
+</section>
+
+<section>
+    <figure class=""><img src="images/basics-strings.png" alt=""><figcaption><b>Fig. 13</b> · <b>Operations on strings.</b> + and * with live inputs, and the TypeError you get for "Age: " + 19.</figcaption></figure>
+    <figure class=""><img src="images/basics-comments.png" alt=""><figcaption><b>Fig. 14</b> · <b>Composition and comments.</b> A program built by composition, run with input 3, and its comment lines counted by <code>count_comments()</code>.</figcaption></figure>
+</section>
+
+<!-- ============ 05 UNIT II ============ -->
+<section class="chapter">
+    <p class="kicker">05 · Unit II</p>
+    <h2>Conditional and iterative statements</h2>
+    <p class="lead">Unit II: modulus operator, random numbers, Boolean expressions, logic operators, conditional and nested conditionals. Then while statements, for loop statement, nested for, nested while, random numbers in loops, encapsulation and generalization. <span class="tag">CO2</span><span class="tag">Practicals 2–5, 12</span></p>
+    <figure class=""><img src="images/control-modulus.png" alt=""><figcaption><b>Fig. 15</b> · <b>Modulus operator.</b> Everything % tells you about 17 and 5, and clock arithmetic: (10 + 5) % 12 is drawn as 3 o'clock.</figcaption></figure>
+    <figure class=""><img src="images/control-boolean.png" alt=""><figcaption><b>Fig. 16</b> · <b>Boolean expressions and logic operators.</b> The truth table generated for <code>(a or b) and not (a and b)</code>, which turns out to be XOR, next to the and / or / not table and short-circuit examples.</figcaption></figure>
+</section>
+
+<section>
+    <figure class=""><img src="images/control-conditionals.png" alt=""><figcaption><b>Fig. 17</b> · <b>Conditional and nested conditionals.</b> For 74 marks the grade ladder highlights the <code>elif marks >= 70</code> branch. Next to it: the nested ticket-price conditional and a leap-year check with its % steps.</figcaption></figure>
+    <figure class=""><img src="images/control-random.png" alt=""><figcaption><b>Fig. 18</b> · <b>Random numbers.</b> 600 dice rolls with seed 42: each face comes up between 84 and 107 times against an expected 100, and the average roll is 3.477. On the right, π estimated from random points.</figcaption></figure>
+</section>
+
+<section>
+    <div class="grid2">
+        <figure class=""><img src="images/control-nestedfor.png" alt=""><figcaption><b>Fig. 19</b> · <b>Nested for.</b> A multiplication grid.</figcaption></figure>
+        <figure class=""><img src="images/control-nestedwhile.png" alt=""><figcaption><b>Fig. 20</b> · <b>Nested while.</b> The inner loop tries divisors to find primes.</figcaption></figure>
+    </div>
+    <div class="grid2">
+        <figure class=""><img src="images/control-break.png" alt=""><figcaption><b>Fig. 21</b> · <b>break, continue and loop else.</b> The else part runs only when the loop wasn't broken.</figcaption></figure>
+        <figure class=""><img src="images/control-gen3.png" alt=""><figcaption><b>Fig. 22</b> · <b>Generalization, step 3.</b> n becomes a parameter of print_multiples.</figcaption></figure>
+    </div>
+    <div class="grid2">
+        <figure class=""><img src="images/control-while.png" alt=""><figcaption><b>Fig. 23</b> · <b>while statement.</b> The Collatz sequence from 27 reaches 1 after 111 steps.</figcaption></figure>
+        <figure class=""><img src="images/control-gen4.png" alt=""><figcaption><b>Fig. 24</b> · <b>Generalization, step 4.</b> print_multiples reused for a whole table.</figcaption></figure>
+    </div>
+    <figure class=""><img src="images/control-pattern.png" alt=""><figcaption><b>Fig. 25</b> · <b>Pattern printer.</b> Nested loops print a pyramid, a triangle, numbers or letters.</figcaption></figure>
+    <figure class=""><img src="images/control-tracer.png" alt=""><figcaption><b>Fig. 26</b> · <b>Loop tracer.</b> Step 8 of the for loop: line 2 is about to run, <code>total</code> has just changed to 6 (highlighted) and <code>i</code> is 3. The steps are recorded by <code>sys.settrace</code>.</figcaption></figure>
+</section>
+
+<!-- ============ 06 UNIT III ============ -->
+<section class="chapter">
+    <p class="kicker">06 · Unit III</p>
+    <h2>Strings, lists, tuples and dictionaries</h2>
+    <p class="lead">Unit III: a string is a compound data type; length, traversal, slices, comparison, the find function, looping and counting. Lists: values, length, membership, operations, slices, deletion, accessing elements, lists and for loops, list parameters and nested lists. Tuples and dictionaries: mutability, tuple assignment, tuples as return values, dictionary operations and methods, sparse matrices, aliasing and copying. CO4 adds sets and sorting. <span class="tag">CO4</span><span class="tag">Practicals 6, 13, 14</span></p>
+    <figure class=""><img src="images/strings-slices.png" alt=""><figcaption><b>Fig. 27</b> · <b>Slice visualizer.</b> <code>s[::-2]</code> on "LOVELY PROFESSIONAL": the characters it picks are raised in yellow, with positive and negative indexes, and the visited indices come from <code>slice_info()</code>.</figcaption></figure>
+    <div class="grid2">
+        <figure class=""><img src="images/strings-index.png" alt=""><figcaption><b>Fig. 28</b> · <b>A compound data type and its length.</b> Indexing, len() and the IndexError past the end.</figcaption></figure>
+        <figure class=""><img src="images/strings-traverse.png" alt=""><figcaption><b>Fig. 29</b> · <b>String traversal</b> with a while loop and an index.</figcaption></figure>
+    </div>
+    <figure class=""><img src="images/strings-compare.png" alt=""><figcaption><b>Fig. 30</b> · <b>Comparison.</b> "apple" > "Apple" because 'a' is 97 and 'A' is 65.</figcaption></figure>
+</section>
+
+<section>
+    <figure class=""><img src="images/strings-find.png" alt=""><figcaption><b>Fig. 31</b> · <b>The find function, looping and counting.</b> The hand-written <code>find()</code> searching "banana bandana" for "a" from index 3 (blue outline), every "a" highlighted, and the count, checked against the built-in methods.</figcaption></figure>
+    <div class="grid2">
+        <figure class=""><img src="images/strings-count.png" alt=""><figcaption><b>Fig. 32</b> · <b>Looping and counting.</b> Vowels and words counted with the counter pattern.</figcaption></figure>
+        <figure class=""><img src="images/strings-split.png" alt=""><figcaption><b>Fig. 33</b> · <b>String methods.</b> split, join and replace.</figcaption></figure>
+    </div>
+    <figure class=""><img src="images/coll-lists.png" alt=""><figcaption><b>Fig. 34</b> · <b>Lists.</b> <code>list_demo()</code> on your own values (length, membership, slices, +, *, del) and a cell that changes a list in place.</figcaption></figure>
+    <div class="grid2">
+        <figure class=""><img src="images/coll-listparams.png" alt=""><figcaption><b>Fig. 35</b> · <b>List parameters.</b> <code>double_all()</code> changes the caller's list; <code>doubled()</code> returns a new one.</figcaption></figure>
+        <figure class=""><img src="images/coll-delete.png" alt=""><figcaption><b>Fig. 36</b> · <b>Deletion.</b> del by index and by slice, remove() and clear().</figcaption></figure>
+    </div>
+</section>
+
+<section>
+    <figure class=""><img src="images/coll-nested.png" alt=""><figcaption><b>Fig. 37</b> · <b>Nested lists.</b> A 3×4 matrix built as a list of rows, and its transpose.</figcaption></figure>
+    <figure class=""><img src="images/coll-tuples.png" alt=""><figcaption><b>Fig. 38</b> · <b>Tuples.</b> Three values returned as one tuple, and the TypeError from assigning to a tuple item.</figcaption></figure>
+    <div class="grid2">
+        <figure class=""><img src="images/coll-tuplecell.png" alt=""><figcaption><b>Fig. 39</b> · <b>Tuple assignment.</b> Unpacking, swapping and starred assignment.</figcaption></figure>
+        <figure class=""><img src="images/coll-tuplereturn.png" alt=""><figcaption><b>Fig. 40</b> · <b>Tuples as return values.</b> min_max() and divmod().</figcaption></figure>
+    </div>
+    <figure class=""><img src="images/coll-dicts.png" alt=""><figcaption><b>Fig. 41</b> · <b>Dictionaries: operations and methods.</b> A word counter drawn as bars, and keys / values / items / get / setdefault / pop run on a real dict.</figcaption></figure>
+</section>
+
+<section>
+    <figure class=""><img src="images/coll-sparse.png" alt=""><figcaption><b>Fig. 42</b> · <b>Sparse matrices.</b> The clicked cells are stored by the real <code>SparseMatrix</code> class as a dictionary keyed by (row, col): 6 of 36 cells stored, 84% saved.</figcaption></figure>
+    <figure class=""><img src="images/coll-aliasing.png" alt=""><figcaption><b>Fig. 43</b> · <b>Aliasing and copying.</b> After <code>alias[0] = "X"</code> and <code>a[2][0] = "Y"</code>: the alias changes with a, the shallow copy shares the inner list, and the deep copy is untouched.</figcaption></figure>
+    <div class="grid2">
+        <figure class=""><img src="images/coll-isvs.png" alt=""><figcaption><b>Fig. 44</b> · <b>is vs ==.</b> Equal values, different objects.</figcaption></figure>
+        <figure class=""><img src="images/coll-copycell.png" alt=""><figcaption><b>Fig. 45</b> · <b>Copying nested lists</b>, and the <code>[[0] * 2] * 2</code> trap.</figcaption></figure>
+    </div>
+</section>
+
+<section>
+    <figure class=""><img src="images/coll-sets.png" alt=""><figcaption><b>Fig. 46</b> · <b>Sets and sorting the data (CO4).</b> Set operations on two lists of subjects, and records sorted by age from low to high, with ties kept in name order.</figcaption></figure>
+    <figure class=""><img src="images/coll-bubble.png" alt=""><figcaption><b>Fig. 47</b> · <b>Bubble sort pass by pass</b>, next to sets in code.</figcaption></figure>
+</section>
+
+<!-- ============ 07 UNIT IV ============ -->
+<section class="chapter">
+    <p class="kicker">07 · Unit IV</p>
+    <h2>Functions and recursion</h2>
+    <p class="lead">Unit IV: function calls, type conversion and coercion, math functions, adding new functions, parameters and arguments, recursion and its use. <span class="tag">CO3</span><span class="tag">Practical 7</span></p>
+    <figure class=""><img src="images/fn-calls.png" alt=""><figcaption><b>Fig. 48</b> · <b>Function calls, type conversion and coercion.</b> "3.75" passed through int(), float(), complex(), bool(), str() and list(); int() refuses it with ValueError. The coercion table shows int + float becoming float.</figcaption></figure>
+    <figure class=""><img src="images/fn-math.png" alt=""><figcaption><b>Fig. 49</b> · <b>Math functions.</b> The math module on x = 45, including sin(radians(45)) = 0.707107.</figcaption></figure>
+    <div class="grid2">
+        <figure class=""><img src="images/fn-def1.png" alt=""><figcaption><b>Fig. 50</b> · <b>Adding new functions.</b> def, return, and a function that returns None.</figcaption></figure>
+        <figure class=""><img src="images/fn-def3.png" alt=""><figcaption><b>Fig. 51</b> · <b>Local and global scope.</b></figcaption></figure>
+    </div>
+</section>
+
+<section>
+    <figure class=""><img src="images/fn-params.png" alt=""><figcaption><b>Fig. 52</b> · <b>Parameters and arguments.</b> <code>bill(*items, tax=, discount=)</code> called with three positional and two keyword arguments.</figcaption></figure>
+    <div class="grid2">
+        <figure class=""><img src="images/fn-param1.png" alt=""><figcaption><b>Fig. 53</b> · <b>Positional, keyword and default arguments.</b></figcaption></figure>
+        <figure class=""><img src="images/fn-param2.png" alt=""><figcaption><b>Fig. 54</b> · <b>*args and **kwargs</b>, and unpacking a list into arguments.</figcaption></figure>
+    </div>
+    <figure class=""><img src="images/fn-recursion.png" alt=""><figcaption><b>Fig. 55</b> · <b>Recursion tree for fib(5).</b> 15 calls; fib(3) and fib(2) are computed again and again, which is why the memoised version needs only 9.</figcaption></figure>
+</section>
+
+<section>
+    <figure class="fig-short"><img src="images/fn-fact.png" alt=""><figcaption><b>Fig. 56</b> · <b>factorial(6).</b> One call per level, with the results coming back up: 1, 2, 6, 24, 120, 720.</figcaption></figure>
+    <figure class=""><img src="images/fn-memo.png" alt=""><figcaption><b>Fig. 57</b> · <b>Why fib(n) gets slow.</b> Calls with and without a memo dictionary (242,785 against 49 for n = 25), next to the recursive definitions.</figcaption></figure>
+    <figure class=""><img src="images/fn-uses.png" alt=""><figcaption><b>Fig. 58</b> · <b>Recursion and its use.</b> Tower of Hanoi with 3 disks in 7 moves (2³ − 1), plus fast power and digit sum.</figcaption></figure>
+    <div class="grid2">
+        <figure class=""><img src="images/fn-bsearch.png" alt=""><figcaption><b>Fig. 59</b> · <b>Recursive binary search.</b></figcaption></figure>
+        <figure class=""><img src="images/fn-flatten.png" alt=""><figcaption><b>Fig. 60</b> · <b>Flattening a nested list.</b></figcaption></figure>
+    </div>
+</section>
+
+<!-- ============ 08 UNIT V ============ -->
+<section class="chapter">
+    <p class="kicker">08 · Unit V</p>
+    <h2>Classes, objects and OOP terminology</h2>
+    <p class="lead">Unit V: creating classes, creating instance objects, accessing attributes; class inheritance, overriding methods, data hiding and function overloading. Together these give the encapsulation, polymorphism and inheritance of CO5. <span class="tag">CO5</span><span class="tag">Practical 13</span></p>
+    <figure class=""><img src="images/oop-classes.png" alt=""><figcaption><b>Fig. 61</b> · <b>Creating classes and instance objects.</b> A third Student object ("Dev") was created from the form. <code>Student.count</code> is 3 and the class attribute is shared by all three.</figcaption></figure>
+    <figure class="fig-short"><img src="images/oop-point.png" alt=""><figcaption><b>Fig. 62</b> · <b>A class written from scratch.</b> __init__ with defaults, a method, __str__, and the docstring.</figcaption></figure>
+    <figure class=""><img src="images/oop-attributes.png" alt=""><figcaption><b>Fig. 63</b> · <b>Accessing attributes.</b> What <code>vars()</code>, the class and <code>hasattr()</code> see on a Student, and getattr / setattr / del in code.</figcaption></figure>
+</section>
+
+<section>
+    <figure class=""><img src="images/oop-uml.png" alt=""><figcaption><b>Fig. 64</b> · <b>Class inheritance in unit5_oop.py.</b> Square inherits from Rectangle, which inherits from Shape (multilevel).</figcaption></figure>
+    <figure class=""><img src="images/oop-inheritance.png" alt=""><figcaption><b>Fig. 65</b> · <b>Overriding methods and polymorphism.</b> A Triangle(3, 4, 5) built from the form, with its MRO; and one loop calling <code>describe()</code> on four different classes, each running its own area().</figcaption></figure>
+    <figure class="fig-short"><img src="images/oop-animal.png" alt=""><figcaption><b>Fig. 66</b> · <b>super().</b> Puppy extends Dog's speak() instead of replacing it.</figcaption></figure>
+</section>
+
+<section>
+    <figure class=""><img src="images/oop-hiding.png" alt=""><figcaption><b>Fig. 67</b> · <b>Data hiding.</b> A deposit of 500 goes through, then a withdrawal of 5000 is refused. <code>vars(acc)</code> shows the hidden balance as <code>_BankAccount__balance</code>, and the balance property has no setter.</figcaption></figure>
+    <figure class="fig-short"><img src="images/oop-breakin.png" alt=""><figcaption><b>Fig. 68</b> · <b>Trying to break in.</b> Assigning <code>acc.__balance</code> from outside only creates a new attribute; the real balance stays 500.</figcaption></figure>
+    <figure class=""><img src="images/oop-overloading.png" alt=""><figcaption><b>Fig. 69</b> · <b>Operator overloading.</b> Vector with + − * == abs() len() defined by special methods.</figcaption></figure>
+    <div class="grid2">
+        <figure class=""><img src="images/oop-overload1.png" alt=""><figcaption><b>Fig. 70</b> · <b>Function overloading in Python:</b> one add() with *nums and a keyword, and proof that a second def replaces the first.</figcaption></figure>
+        <figure class=""><img src="images/oop-money.png" alt=""><figcaption><b>Fig. 71</b> · <b>Your own operators:</b> Money with __add__, __lt__ and __str__, sorted and summed.</figcaption></figure>
+    </div>
+</section>
+
+<!-- ============ 09 UNIT VI ============ -->
+<section class="chapter">
+    <p class="kicker">09 · Unit VI</p>
+    <h2>Files, exceptions and regular expressions</h2>
+    <p class="lead">Unit VI: text files, writing variables, reading from and writing to a file, directories, pickling, handling ZeroDivisionError, try–except blocks, the else block and handling FileNotFoundError. Then regular expressions: the concept, various types, the match function and web scraping with regular expressions. <span class="tag">CO6</span><span class="tag">Practicals 8–11, 14, 15</span></p>
+    <div class="grid2">
+        <figure class=""><img src="images/files-write.png" alt=""><figcaption><b>Fig. 72</b> · <b>Writing to a file.</b> "w" then "a", and tell().</figcaption></figure>
+        <figure class=""><img src="images/files-read.png" alt=""><figcaption><b>Fig. 73</b> · <b>Reading from a file</b> with read(), readline(), readlines() and line by line.</figcaption></figure>
+    </div>
+    <div class="grid2">
+        <figure class=""><img src="images/files-vars.png" alt=""><figcaption><b>Fig. 74</b> · <b>Writing variables.</b> Numbers stored as text and converted back to int and float.</figcaption></figure>
+        <figure class=""><img src="images/files-tree.png" alt=""><figcaption><b>Fig. 75</b> · <b>Directories.</b> makedirs, rename and a folder tree.</figcaption></figure>
+    </div>
+</section>
+
+<section>
+    <figure class=""><img src="images/files-pickle.png" alt=""><figcaption><b>Fig. 76</b> · <b>Pickling.</b> A dict pickled to record.pkl and loaded back equal. The hex dump starts with 0x80 0x04 (protocol 4), and the strings are visible between the opcodes.</figcaption></figure>
+    <figure class=""><img src="images/files-explorer.png" alt=""><figcaption><b>Fig. 77</b> · <b>File explorer.</b> The files created by the cells on the other tabs, with record.pkl opened as a hex dump.</figcaption></figure>
+    <figure class=""><img src="images/files-exceptions.png" alt=""><figcaption><b>Fig. 78</b> · <b>try / except / else / finally.</b> <code>safe_divide(10, 0)</code> goes try → except ZeroDivisionError → finally and skips else. <code>read_or_explain()</code> reports the word count of story.txt.</figcaption></figure>
+    <div class="grid2">
+        <figure class=""><img src="images/files-zde.png" alt=""><figcaption><b>Fig. 79</b> · <b>Handling ZeroDivisionError</b> with input 5 and 0.</figcaption></figure>
+        <figure class=""><img src="images/files-fnf.png" alt=""><figcaption><b>Fig. 80</b> · <b>Handling FileNotFoundError</b> for several files.</figcaption></figure>
+    </div>
+</section>
+
+<section>
+    <figure class=""><img src="images/regex-presets.png" alt=""><figcaption><b>Fig. 81</b> · <b>Regex tester: patterns from <code>unit6_files.PATTERNS</code>.</b></figcaption></figure>
+    <figure class=""><img src="images/regex-tester.png" alt=""><figcaption><b>Fig. 82</b> · <b>Regex tester.</b> The date pattern highlights both dates. match() finds nothing at the start, search() finds the first date and findall() returns the (day, month, year) groups, with each span listed.</figcaption></figure>
+    <div class="grid2">
+        <figure class=""><img src="images/regex-first.png" alt=""><figcaption><b>Fig. 83</b> · <b>Concept of regular expressions:</b> first patterns.</figcaption></figure>
+        <figure class=""><img src="images/regex-groups.png" alt=""><figcaption><b>Fig. 84</b> · <b>Types of regular expressions:</b> groups and named groups.</figcaption></figure>
+    </div>
+</section>
+
+<section>
+    <figure class=""><img src="images/regex-match.png" alt=""><figcaption><b>Fig. 85</b> · <b>Using the match function.</b> Password validation with lookaheads and <code>fullmatch()</code>, next to match vs search vs fullmatch.</figcaption></figure>
+    <figure class="fig-short"><img src="images/regex-loop.png" alt=""><figcaption><b>Fig. 86</b> · <b>Checking input in a loop.</b> Two wrong mobile numbers are rejected before a valid one is saved.</figcaption></figure>
+    <div class="grid2">
+        <figure class=""><img src="images/regex-sub.png" alt=""><figcaption><b>Fig. 87</b> · <b>re.sub</b> masking phone numbers, cleaning spaces, and a function as the replacement.</figcaption></figure>
+        <figure class=""><img src="images/strings-format.png" alt=""><figcaption><b>Fig. 88</b> · <b>Formatting text</b> for output (Unit III, used throughout Unit VI).</figcaption></figure>
+    </div>
+</section>
+
+<section>
+    <figure class=""><img src="images/regex-scrape.png" alt=""><figcaption><b>Fig. 89</b> · <b>Web scraping using regular expressions.</b> The sample shop page and everything <code>scrape()</code> pulls out of its HTML: title, headings, links, prices and e-mails.</figcaption></figure>
+    <figure class=""><img src="images/regex-products.png" alt=""><figcaption><b>Fig. 90</b> · <b>Product cards as tuples.</b> <code>scrape_products()</code> returns (name, price, rating), sorted here by rating, next to the scraping code itself.</figcaption></figure>
+</section>
+
+<!-- ============ 10 PRACTICALS ============ -->
+<section class="chapter">
+    <p class="kicker">10 · The 15 practicals</p>
+    <h2>Every program from the list</h2>
+    <p class="lead">Each practical is a file in <code>python/practicals/</code> with small functions that can be tested and a <code>main()</code> that talks to the user with <code>input()</code>. On the site each one has its aim, the concepts it uses, the code in an editor, an input box with sample input, the output and viva questions. Every run is saved to the Lab record, which prints like a lab file.</p>
+    <figure class="fig-tall"><img src="images/prac-p03.png" alt=""><figcaption><b>Fig. 91</b> · <b>Practical 3 on the site.</b> The aim, the concepts used, the program in the editor, the sample input 153 and the output with the sum of cubes.</figcaption></figure>
+</section>
+
+<section>
+</section>
+
+<section>
+    <figure class=""><img src="images/record.png" alt=""><figcaption><b>Fig. 92</b> · <b>Lab record.</b> After "Run all 15": all 15 practicals recorded with aim, program, input and output, ready to print.</figcaption></figure>
+    <h3>Runs on my laptop</h3>
+    <p>These outputs come from running each file with <code>python3</code> 3.14 on my laptop, with the sample input shown (what is typed after a prompt appears on the same line, as in a terminal).</p>
+    <div class="two"><div class="prac"><h4><span>01</span>Program to enter two numbers and print the arithmetic operations like +, -, *, /, // and %.</h4>
+<p class="meta"><code>practicals/p01_arithmetic.py</code> · Unit I · CO1 · input(), float(), arithmetic operators, dict, f-strings, division by zero check</p>
+<pre><span class="file">$ python p01_arithmetic.py   (input: 17, 5)</span>Enter first number: 17
+Enter second number: 5
+17 + 5 = 22
+17 - 5 = 12
+17 * 5 = 85
+17 / 5 = 3.4
+17 // 5 = 3
+17 % 5 = 2</pre></div>
+<div class="prac"><h4><span>02</span>Write a program to find whether an inputted number is perfect or not.</h4>
+<p class="meta"><code>practicals/p02_perfect.py</code> · Unit II · CO2 · for loop, %, list of divisors, sum(), if / else</p>
+<pre><span class="file">$ python p02_perfect.py   (input: 28)</span>Enter a number: 28
+Proper divisors: 1 + 2 + 4 + 7 + 14 = 28
+28 is a perfect number</pre></div>
+<div class="prac"><h4><span>03</span>Write a program to check if the entered number is Armstrong or not.</h4>
+<p class="meta"><code>practicals/p03_armstrong.py</code> · Unit II · CO2 · while loop, % 10 and // 10 to take digits, ** power, len(str(n))</p>
+<pre><span class="file">$ python p03_armstrong.py   (input: 153)</span>Enter a number: 153
+1^3 + 5^3 + 3^3 = 153
+153 is an Armstrong number</pre></div>
+<div class="prac"><h4><span>04</span>Write a program to find factorial of the entered number.</h4>
+<p class="meta"><code>practicals/p04_factorial.py</code> · Unit II · CO2 · for loop with range(2, n + 1), accumulator, raising and catching ValueError</p>
+<pre><span class="file">$ python p04_factorial.py   (input: 6)</span>Enter a number: 6
+6! = 720</pre></div>
+<div class="prac"><h4><span>05</span>Write a program to enter the number of terms and to print the Fibonacci series.</h4>
+<p class="meta"><code>practicals/p05_fibonacci.py</code> · Unit II · CO2 · tuple assignment a, b = b, a + b, for loop, list, print(*list)</p>
+<pre><span class="file">$ python p05_fibonacci.py   (input: 12)</span>How many terms? 12
+Fibonacci series: 0 1 1 2 3 5 8 13 21 34 55 89</pre></div>
+<div class="prac"><h4><span>06</span>Write a program to enter the string and to check if it's palindrome or not using loop.</h4>
+<p class="meta"><code>practicals/p06_palindrome.py</code> · Unit III · CO4 · string traversal from both ends with a while loop, str.isalnum(), lower()</p>
+<pre><span class="file">$ python p06_palindrome.py   (input: Never odd or even)</span>Enter a string: Never odd or even
+"Never odd or even" is a palindrome</pre></div>
+<div class="prac"><h4><span>07</span>Recursively find the factorial of a natural number.</h4>
+<p class="meta"><code>practicals/p07_recursive_factorial.py</code> · Unit IV · CO3 · recursion with base case n &lt;= 1, a second version that prints each call and return</p>
+<pre><span class="file">$ python p07_recursive_factorial.py   (input: 5)</span>Enter a natural number: 5
+factorial(5)
+  factorial(4)
+    factorial(3)
+      factorial(2)
+        factorial(1)
+        returns 1
+      returns 2 * factorial(1) = 2
+    returns 3 * factorial(2) = 6
+  returns 4 * factorial(3) = 24
+returns 5 * factorial(4) = 120
+
+5! = 120</pre></div>
+<div class="prac"><h4><span>08</span>Read a file line by line and print it.</h4>
+<p class="meta"><code>practicals/p08_read_lines.py</code> · Unit VI · CO6 · with open(), iterating over the file object, enumerate(), FileNotFoundError</p>
+<pre><span class="file">$ python p08_read_lines.py</span>File name (Enter for story.txt): 
+ 1: Python was created by Guido van Rossum and first released in 1991.
+ 2: It is named after Monty Python, not after the snake.
+ 3: Readability counts, so Python uses indentation instead of braces.
+ 4: A program is a sequence of instructions that tells a computer what to do.
+ 5: Files let a program remember data after it stops running.
+ 6: Every Python object has a type, a value and an identity.
+ 7: Code it, test it, fix it.
+ 8: Python is fun.</pre></div>
+<div class="prac"><h4><span>09</span>Remove all the lines that contain the character "a" in a file and write it into another file.</h4>
+<p class="meta"><code>practicals/p09_remove_a_lines.py</code> · Unit VI · CO6 · reading and writing three files at once, "w" mode, membership test with in</p>
+<pre><span class="file">$ python p09_remove_a_lines.py</span>6 lines contained 'a' and were moved to lines_with_a.txt
+2 lines were kept in without_a.txt
+
+--- without_a.txt ---
+Code it, test it, fix it.
+Python is fun.
+
+--- lines_with_a.txt ---
+Python was created by Guido van Rossum and first released in 1991.
+It is named after Monty Python, not after the snake.
+Readability counts, so Python uses indentation instead of braces.
+A program is a sequence of instructions that tells a computer what to do.
+Files let a program remember data after it stops running.
+Every Python object has a type, a value and an identity.</pre></div>
+<div class="prac"><h4><span>10</span>Read a text file and display the number of vowels / consonants / uppercase / lowercase characters in the file.</h4>
+<p class="meta"><code>practicals/p10_char_count.py</code> · Unit VI · CO6 · isalpha(), isupper(), isdigit(), dictionary of counters</p>
+<pre><span class="file">$ python p10_char_count.py</span>File name (Enter for story.txt): 
+vowels      121
+consonants  203
+uppercase   14
+lowercase   310
+digits      4
+spaces      67</pre></div>
+<div class="prac"><h4><span>11</span>Create a binary file with name and roll no. Search for a given roll number and display the name, if not found display appropriate message.</h4>
+<p class="meta"><code>practicals/p11_binary_roll.py</code> · Unit VI · CO6 · pickle.dump / pickle.load, "wb" and "rb" modes, dict lookup with get()</p>
+<pre><span class="file">$ python p11_binary_roll.py   (input: 3, 101, Aman, 102, Riya, 103, Dev, 102)</span>How many students? 3
+Roll no: 101
+Name: Aman
+Roll no: 102
+Name: Riya
+Roll no: 103
+Name: Dev
+Saved 3 records to students.dat
+
+Roll no to search: 102
+Roll no 102 belongs to Riya</pre></div>
+<div class="prac"><h4><span>12</span>Write a random number generator that generates random numbers between 1 and 6 (simulates a dice).</h4>
+<p class="meta"><code>practicals/p12_dice.py</code> · Unit II · CO2 · random.randint(1, 6), loop, dict of counts, text bar chart</p>
+<pre><span class="file">$ python p12_dice.py   (input: 60)</span>How many times to roll? 60
+Rolls: ⚄ ⚃ ⚃ ⚃ ⚀ ⚁ ⚀ ⚅ ⚁ ⚃ ⚄ ⚄ ⚁ ⚃ ⚄ ⚃ ⚂ ⚂ ⚁ ⚀ ⚃ ⚄ ⚀ ⚃ ⚄ ⚃ ⚃ ⚂ ⚁ ⚁ ...
+
+1 ⚀    12  ########
+2 ⚁    10  #######
+3 ⚂     9  ######
+4 ⚃    12  ########
+5 ⚄    12  ########
+6 ⚅     5  ###</pre></div>
+<div class="prac"><h4><span>13</span>Write a python program to implement a stack using a list data structure.</h4>
+<p class="meta"><code>practicals/p13_stack.py</code> · Unit V · CO4 · CO5 · class Stack wrapping a list, append() / pop(), IndexError on underflow, bracket matching</p>
+<pre><span class="file">$ python p13_stack.py   (input: push 10, push 20, push 30, show, pop, peek, check {[()()]}, check ([)], pop, pop, pop, quit)</span>Commands: push &lt;x&gt;, pop, peek, show, check &lt;expression&gt;, quit
+&gt; push 10
+pushed 10 -&gt; [10]  &lt;- top
+&gt; push 20
+pushed 20 -&gt; [10, 20]  &lt;- top
+&gt; push 30
+pushed 30 -&gt; [10, 20, 30]  &lt;- top
+&gt; show
+[10, 20, 30]  &lt;- top (size 3)
+&gt; pop
+popped 30 -&gt; [10, 20]  &lt;- top
+&gt; peek
+top is 20
+&gt; check {[()()]}
+{[()()]} is balanced
+&gt; check ([)]
+([)] is NOT balanced
+&gt; pop
+popped 20 -&gt; [10]  &lt;- top
+&gt; pop
+popped 10 -&gt; []  &lt;- top
+&gt; pop
+Error: pop from an empty stack (underflow)
+&gt; quit</pre></div>
+<div class="prac"><h4><span>14</span>Take a sample of ten phishing e-mails (any text file) and find most common words.</h4>
+<p class="meta"><code>practicals/p14_phishing_words.py</code> · Unit VI · CO4 · CO6 · os.listdir, reading many files, re.findall for words, dict counts, sorting by count, stop words</p>
+<pre><span class="file">$ python p14_phishing_words.py   (input: 10)</span>How many top words? 10
+Read 10 phishing e-mails
+
+refund         9  #########################
+hours          7  ###################
+details        6  #################
+account        5  ##############
+pay            5  ##############
+bank           4  ###########
+card           4  ###########
+claim          4  ###########
+customer       4  ###########
+expires        4  ###########</pre></div>
+<div class="prac"><h4><span>15</span>Read a text file line by line and display each word separated by a #.</h4>
+<p class="meta"><code>practicals/p15_hash_words.py</code> · Unit VI · CO6 · reading line by line, str.split(), "#".join()</p>
+<pre><span class="file">$ python p15_hash_words.py</span>File name (Enter for story.txt): 
+Python#was#created#by#Guido#van#Rossum#and#first#released#in#1991.
+It#is#named#after#Monty#Python,#not#after#the#snake.
+Readability#counts,#so#Python#uses#indentation#instead#of#braces.
+A#program#is#a#sequence#of#instructions#that#tells#a#computer#what#to#do.
+Files#let#a#program#remember#data#after#it#stops#running.
+Every#Python#object#has#a#type,#a#value#and#an#identity.
+Code#it,#test#it,#fix#it.
+Python#is#fun.</pre></div>
+</div>
+</section>
+
+<!-- ============ 11 MAILGUARD ============ -->
+<section class="chapter">
+    <p class="kicker">11 · MailGuard</p>
+    <h2>A phishing mail analyser</h2>
+    <p class="lead">Practical 14 asks for the most common words in ten phishing mails. Counting words made it obvious that phishing mails share patterns: they rush you, they ask for an OTP or a card number, the sender's domain doesn't match the brand, and the links hide where they go. MailGuard turns each pattern into a rule class and adds the points up into a score with reasons. <span class="tag">CO1–CO6</span></p>
+    <figure class=""><img src="images/mailguard.png" alt=""><figcaption><b>Fig. 93</b> · <b>MailGuard.</b> 14 mails analysed: all 10 phishing mails score 50 or more and the 4 normal mails score 0. The selected mail shows its score gauge, the parts the rules flagged highlighted in the text, and all seven findings with their points.</figcaption></figure>
+    <figure class="fig-short"><img src="images/mailguard-pasted.png" alt=""><figcaption><b>Fig. 94</b> · <b>Testing a new mail.</b> A mail pasted into the page, analysed by the same code: 66, phishing, from six findings: two urgency phrases, the request for OTP and card number, the unencrypted link, a domain made to look official, and a sender claiming to be HDFC from another domain.</figcaption></figure>
+</section>
+
+<section>
+    <h3>How it uses the syllabus</h3>
+    <table>
+        <thead><tr><th>Part</th><th>What it does</th><th>Unit</th></tr></thead>
+        <tbody>
+            <tr><th><code>Mail</code></th><td>Splits headers from body at the first blank line, reads the headers with a multiline regex, and gives <code>sender_domain</code>, <code>urls</code> and <code>words()</code>; <code>Mail.from_file()</code> is a classmethod that reads a file</td><td>III, V, VI</td></tr>
+            <tr><th><code>Rule</code> + 6 subclasses</th><td>UrgencyRule, CredentialRule, LinkRule, SenderRule, MoneyRule and AttachmentRule each override <code>check(mail)</code>; MailGuard calls <code>check()</code> without knowing which rule it has (polymorphism)</td><td>V</td></tr>
+            <tr><th><code>Finding</code>, <code>Report</code></th><td>A finding is one reason with points. A report adds them up (max 100), has a <code>verdict</code> property and <code>__lt__</code>, so a list of reports can be sorted</td><td>III, V</td></tr>
+            <tr><th><code>MailGuard</code></th><td>Keeps its rules in a name-mangled <code>__rules</code> list (data hiding). <code>analyse_folder()</code> lists a directory and skips unreadable files with try / except</td><td>V, VI</td></tr>
+            <tr><th><code>save()</code> / <code>load()</code></th><td>Pickle the reports to a binary file; a missing file gives an empty list instead of a crash</td><td>VI</td></tr>
+            <tr><th><code>common_words()</code></th><td>Counter of words minus stop words, which is practical 14</td><td>III</td></tr>
+        </tbody>
+    </table>
+    <figure class="fig-short"><img src="images/mailguard-parts.png" alt=""><figcaption><b>Fig. 95</b> · <b>Bottom of the page.</b> Paste a mail, and the most common words in the phishing set.</figcaption></figure>
+    <h3>Command line</h3>
+    <pre class="term"><span class="file">$ python -m pybench.mailguard</span>MailGuard checked 10 mails with 6 rules
+
+ 90  phishing    07_microsoft_password.txt Your password expires today
+ 89  phishing    01_sbi_kyc.txt           URGENT: Your SBI account will be blocked toda
+ 81  phishing    04_lpu_fee.txt           Final notice: pending semester fee
+ 74  phishing    03_netflix.txt           Your membership has been suspended
+ 71  phishing    02_lottery.txt           Congratulations!! You WON Rs 25,00,000 in the
+ 71  phishing    08_income_tax.txt        You are eligible for an income tax refund of 
+ 68  phishing    09_job_offer.txt         You are selected for a work from home job - R
+ 60  phishing    05_amazon_refund.txt     Refund of Rs 2,349 is waiting for you
+ 54  phishing    06_dhl_parcel.txt        Your parcel is on hold - action required
+ 50  phishing    10_crypto.txt            Double your Bitcoin in 24 hours
+
+Most common words:
+  refund       9
+  hours        7
+  details      6
+  account      5
+  within       5
+  pay          5
+  sbi          4
+  today        4
+  customer     4
+  update       4</pre>
+</section>
+
+<section>
+    <h3>The notebook version</h3>
+    <p><code>notebooks/mailguard_analysis.ipynb</code> runs the same package in a Jupyter / Kaggle notebook. In Kaggle, turn Internet on and the first cell clones the repository. It puts the reports into pandas tables, compares the phishing and normal sets, counts points per rule, extracts every link with a regex, adds a seventh rule as a subclass and saves the reports with pickle. The charts below are the notebook's real output. I executed it with pandas and matplotlib inside Pyodide, because neither is installed on my laptop.</p>
+    <figure class="fig-short"><img src="images/nb-scores.png" alt=""><figcaption><b>Fig. 96</b> · <b>Score of every mail (notebook).</b> The dashed line is the phishing threshold of 50. The lowest phishing mail scores exactly 50 (crypto) and every normal mail scores 0.</figcaption></figure>
+    <div class="grid2">
+        <figure class=""><img src="images/nb-rules.png" alt=""><figcaption><b>Fig. 97</b> · <b>Points per rule.</b> "Sender does not match" (174) and "asks for private details" (170) do the most work.</figcaption></figure>
+        <figure class=""><img src="images/nb-words.png" alt=""><figcaption><b>Fig. 98</b> · <b>Most common words.</b> refund, hours, details and pay never appear in the normal mails.</figcaption></figure>
+    </div>
+    <div class="note">The sample is small and made by me (10 phishing and 4 normal mails), so the perfect result here does not mean MailGuard would be perfect on real inboxes. The next step would be a larger public dataset and learning the rule weights from it instead of choosing them by hand.</div>
+</section>
+
+<!-- ============ 12 MAPPING ============ -->
+<section class="chapter">
+    <p class="kicker">12 · Syllabus and CO mapping</p>
+    <h2>Every topic of the syllabus</h2>
+    <p class="lead">This table is generated from the same data as the Course map page (<code>js/core/syllabus.js</code>), so the report and the site cannot disagree. "Where" gives the page and tab name.</p>
+    <h3>Course outcomes</h3>
+    <table><thead><tr><th>CO</th><th>Statement</th><th>Covered by</th></tr></thead><tbody>
+<tr><th>CO1</th><td>describe the installation of python environment and basics of Python language</td><td>Setting up Python, Variables &amp; expressions, Python shell, practical 1</td></tr>
+<tr><th>CO2</th><td>apply the conditional and iterative statements for evaluating the appropriate alternates</td><td>Conditions &amp; loops (7 tabs incl. loop tracer), practicals 2–5 and 12</td></tr>
+<tr><th>CO3</th><td>explore functions, including recursion, with parameters and arguments in Python</td><td>Functions &amp; recursion (recursion tree, parameters calculator), practical 7</td></tr>
+<tr><th>CO4</th><td>construct the core data structures like lists, dictionaries, tuples and sets in Python to store, process and sort the data</td><td>Strings, Lists/tuples/dicts/sets/sorting, practicals 6, 13, 14</td></tr>
+<tr><th>CO5</th><td>apply the concepts of Object-oriented programming as used in Python using encapsulation, polymorphism, and inheritance</td><td>Classes &amp; objects (5 tabs), Stack class (practical 13), MailGuard rule classes</td></tr>
+<tr><th>CO6</th><td>examine file handling operations and effectively apply regular expressions for pattern matching</td><td>Files &amp; exceptions, Regular expressions, practicals 8–11, 14, 15, MailGuard</td></tr>
+</tbody></table>
+    <h3>Unit I: Setting up your programming environment; variables, expressions and statements <span class="tag">12 topics</span></h3>
+<table class="t-map"><thead><tr><th>Syllabus topic</th><th>Where in PyBench</th><th>What it does</th></tr></thead><tbody>
+<tr><th>Python versions</th><td class="where">Setting up Python › Python versions</td><td>Timeline 0.9 → 3.14, Python 2 vs 3 table, live sys.version of the running interpreter</td></tr>
+<tr><th>Python on Windows</th><td class="where">Setting up Python › Python on Windows</td><td>Install steps, installer screen with "Add python.exe to PATH", Command Prompt checks, troubleshooting table</td></tr>
+<tr><th>Running a 'Hello World' program</th><td class="where">Setting up Python › hello</td><td>Interactive vs script mode, runnable Hello World and a first input() program</td></tr>
+<tr><th>Naming and using variables</th><td class="where">Variables &amp; expressions › Variables &amp; names</td><td>Live name checker (identifier rules, keywords, built-ins, PEP 8), assignment cell</td></tr>
+<tr><th>Avoiding NameError when using variables</th><td class="where">Variables &amp; expressions › Variables &amp; names</td><td>NameError cell to read and fix; name_error_demo() explains the error</td></tr>
+<tr><th>Values and types</th><td class="where">Variables &amp; expressions › Values &amp; types</td><td>Type inspector: type, id and mutability of any literal; type() / isinstance() cell</td></tr>
+<tr><th>Variable names and keywords</th><td class="where">Variables &amp; expressions › Variables &amp; names</td><td>All keywords listed from keyword.kwlist of the running Python</td></tr>
+<tr><th>Statements</th><td class="where">Variables &amp; expressions › Variables &amp; names</td><td>Assignment, chained and multiple assignment statements</td></tr>
+<tr><th>Operators and operands</th><td class="where">Variables &amp; expressions › Operators &amp; order</td><td>Operator table with 17 ? 5, arithmetic and augmented assignment cell</td></tr>
+<tr><th>Order of operations</th><td class="where">Variables &amp; expressions › Operators &amp; order</td><td>Expression stepper: evaluates any expression one operator at a time using ast (PEMDAS, ** right to left, short-circuit)</td></tr>
+<tr><th>Operations on string</th><td class="where">Variables &amp; expressions › String operations</td><td>+ and * on strings with live inputs, str + int TypeError</td></tr>
+<tr><th>Composition and comments</th><td class="where">Variables &amp; expressions › Composition &amp; comments</td><td>Composition cell, comment counter (count_comments), docstrings vs comments</td></tr>
+</tbody></table>
+<h3>Unit II: Conditional and iterative statements <span class="tag">13 topics</span></h3>
+<table class="t-map"><thead><tr><th>Syllabus topic</th><th>Where in PyBench</th><th>What it does</th></tr></thead><tbody>
+<tr><th>Modulus operator</th><td class="where">Conditions &amp; loops › Modulus operator</td><td>a % b explorer (even, last digit, divisibility, check), clock arithmetic drawing</td></tr>
+<tr><th>Random numbers</th><td class="where">Conditions &amp; loops › Random numbers</td><td>Dice simulator with seed and histogram, random module cell</td></tr>
+<tr><th>Boolean expressions</th><td class="where">Conditions &amp; loops › Boolean logic</td><td>Truth table generator for any expression in a, b, c</td></tr>
+<tr><th>Logic operators</th><td class="where">Conditions &amp; loops › Boolean logic</td><td>and / or / not table, truthiness and short-circuit cell</td></tr>
+<tr><th>Conditional</th><td class="where">Conditions &amp; loops › Conditionals</td><td>Grade calculator showing which if / elif / else branch runs</td></tr>
+<tr><th>Nested conditionals</th><td class="where">Conditions &amp; loops › Conditionals</td><td>Ticket price (three levels of nesting), leap year, positive/even cell</td></tr>
+<tr><th>while statements</th><td class="where">Conditions &amp; loops › while &amp; for</td><td>Collatz while loop; loop tracer steps through while loops</td></tr>
+<tr><th>for loop statement</th><td class="where">Conditions &amp; loops › while &amp; for</td><td>range(), strings, step; break / continue / loop else</td></tr>
+<tr><th>Nested for</th><td class="where">Conditions &amp; loops › while &amp; for</td><td>Multiplication grid; pattern printer (triangle, pyramid, numbers, letters)</td></tr>
+<tr><th>Nested while</th><td class="where">Conditions &amp; loops › while &amp; for</td><td>Prime finder with an inner while</td></tr>
+<tr><th>Random numbers in loops</th><td class="where">Conditions &amp; loops › Random numbers</td><td>Monte Carlo π, guess the number game, coin toss loop</td></tr>
+<tr><th>Encapsulation and generalization</th><td class="where">Conditions &amp; loops › Encapsulation &amp; generalization</td><td>The multiplication table built in four steps: code → function → parameter → table</td></tr>
+<tr><th>Tracing loops (extra)</th><td class="where">Conditions &amp; loops › Loop tracer</td><td>Loop tracer built on sys.settrace: line by line, variables and output</td></tr>
+</tbody></table>
+<h3>Unit III: Strings, lists, tuples and dictionaries <span class="tag">20 topics</span></h3>
+<table class="t-map"><thead><tr><th>Syllabus topic</th><th>Where in PyBench</th><th>What it does</th></tr></thead><tbody>
+<tr><th>String: a compound data type</th><td class="where">Strings › Compound type &amp; length</td><td>Index boxes with positive and negative indexes, immutability cell</td></tr>
+<tr><th>Length</th><td class="where">Strings › Compound type &amp; length</td><td>len() and the last index, IndexError</td></tr>
+<tr><th>String traversal</th><td class="where">Strings › Traversal &amp; slices</td><td>while and for traversal, enumerate</td></tr>
+<tr><th>String slices</th><td class="where">Strings › Traversal &amp; slices</td><td>Slice visualizer: any s[start:stop:step] highlighted on the characters</td></tr>
+<tr><th>Comparison</th><td class="where">Strings › Comparison</td><td>Explains why one string is smaller using ord() of the first different character</td></tr>
+<tr><th>find function</th><td class="where">Strings › find, looping &amp; counting</td><td>Hand-written find() with start position, compared with str.find</td></tr>
+<tr><th>Looping and counting</th><td class="where">Strings › find, looping &amp; counting</td><td>count_letter() counter pattern, vowels and words counter</td></tr>
+<tr><th>List values, length, membership</th><td class="where">Lists, tuples &amp; dicts › Lists</td><td>list_demo() on your own values: len, in, indexing</td></tr>
+<tr><th>List operations, slices</th><td class="where">Lists, tuples &amp; dicts › Lists</td><td>+, *, slices, slice assignment, list methods</td></tr>
+<tr><th>Deletion</th><td class="where">Lists, tuples &amp; dicts › Lists</td><td>del by index and slice, remove(), clear()</td></tr>
+<tr><th>Accessing elements; list and for loops</th><td class="where">Lists, tuples &amp; dicts › Lists</td><td>for over items and indexes, list comprehensions</td></tr>
+<tr><th>List parameters</th><td class="where">Lists, tuples &amp; dicts › Lists</td><td>double_all() changes the caller's list, doubled() returns a new one</td></tr>
+<tr><th>Nested list</th><td class="where">Lists, tuples &amp; dicts › Nested lists</td><td>Matrix builder and transpose, marks table</td></tr>
+<tr><th>Mutability and tuples</th><td class="where">Lists, tuples &amp; dicts › Tuples</td><td>TypeError when assigning to a tuple item, single-element tuple</td></tr>
+<tr><th>Tuple assignment</th><td class="where">Lists, tuples &amp; dicts › Tuples</td><td>Unpacking, swap, starred assignment</td></tr>
+<tr><th>Tuple as return values</th><td class="where">Lists, tuples &amp; dicts › Tuples</td><td>min_max_avg() returning three values, divmod()</td></tr>
+<tr><th>Dictionaries operations and methods</th><td class="where">Lists, tuples &amp; dicts › Dictionaries</td><td>Word counter with bar chart, keys/values/items/get/setdefault/pop</td></tr>
+<tr><th>Sparse matrices</th><td class="where">Lists, tuples &amp; dicts › Sparse matrices</td><td>Clickable grid stored by the SparseMatrix class as {(row, col): value}</td></tr>
+<tr><th>Aliasing and copying</th><td class="where">Lists, tuples &amp; dicts › Aliasing &amp; copying</td><td>aliasing_demo(): alias vs shallow vs deep copy, is vs ==</td></tr>
+<tr><th>Sets and sorting the data (CO4)</th><td class="where">Lists, tuples &amp; dicts › Sets &amp; sorting</td><td>Set operations, sorting records with key=, bubble sort pass by pass</td></tr>
+</tbody></table>
+<h3>Unit IV: Functions and recursion <span class="tag">7 topics</span></h3>
+<table class="t-map"><thead><tr><th>Syllabus topic</th><th>Where in PyBench</th><th>What it does</th></tr></thead><tbody>
+<tr><th>Function calls</th><td class="where">Functions &amp; recursion › Calls &amp; type conversion</td><td>Built-in calls, conversion tester</td></tr>
+<tr><th>Type conversion and coercion</th><td class="where">Functions &amp; recursion › Calls &amp; type conversion</td><td>convert() tries int/float/complex/bool/str/list, coercion table</td></tr>
+<tr><th>Math functions</th><td class="where">Functions &amp; recursion › Math functions</td><td>math_table(x) with a slider, math module cell</td></tr>
+<tr><th>Adding new function</th><td class="where">Functions &amp; recursion › Adding new functions</td><td>def / return, functions calling functions, scope, lambda</td></tr>
+<tr><th>Parameters and argument</th><td class="where">Functions &amp; recursion › Parameters &amp; arguments</td><td>bill(*items, tax=, discount=) calculator, defaults, keyword, *args, **kwargs, mutable default trap</td></tr>
+<tr><th>Recursion</th><td class="where">Functions &amp; recursion › Recursion</td><td>Recursion tree drawn for fib(n) and factorial(n), call counts with and without memo</td></tr>
+<tr><th>Recursion and its use</th><td class="where">Functions &amp; recursion › Uses of recursion</td><td>Tower of Hanoi moves, fast power, digit sum, binary search, flatten</td></tr>
+</tbody></table>
+<h3>Unit V: Classes and objects; object oriented programming terminology <span class="tag">7 topics</span></h3>
+<table class="t-map"><thead><tr><th>Syllabus topic</th><th>Where in PyBench</th><th>What it does</th></tr></thead><tbody>
+<tr><th>Creating classes</th><td class="where">Classes &amp; objects › Classes &amp; objects</td><td>Student class with class and instance attributes, class diagram</td></tr>
+<tr><th>Creating instance objects</th><td class="where">Classes &amp; objects › Classes &amp; objects</td><td>Create Student objects from a form, __str__ and __repr__</td></tr>
+<tr><th>Accessing attributes</th><td class="where">Classes &amp; objects › Accessing attributes</td><td>attribute_report(): vars, class attributes, methods; getattr / setattr / hasattr / del</td></tr>
+<tr><th>Class inheritance</th><td class="where">Classes &amp; objects › Inheritance &amp; overriding</td><td>Shape → Rectangle → Square, Circle, Triangle; MRO; build any shape</td></tr>
+<tr><th>Overriding methods</th><td class="where">Classes &amp; objects › Inheritance &amp; overriding</td><td>area() and perimeter() overridden, describe() extended with super(), Animal/Dog/Puppy</td></tr>
+<tr><th>Data hiding</th><td class="where">Classes &amp; objects › Data hiding</td><td>BankAccount with name-mangled __balance and read-only property, deposit / withdraw</td></tr>
+<tr><th>Function overloading</th><td class="where">Classes &amp; objects › Overloading</td><td>Vector operator overloading (+ - * == abs len), Calculator.add(*nums, rounding=)</td></tr>
+</tbody></table>
+<h3>Unit VI: Files and exceptions; regular expressions <span class="tag">14 topics</span></h3>
+<table class="t-map"><thead><tr><th>Syllabus topic</th><th>Where in PyBench</th><th>What it does</th></tr></thead><tbody>
+<tr><th>Text files</th><td class="where">Files &amp; exceptions › Text files</td><td>open modes, write / append, file object attributes</td></tr>
+<tr><th>Writing variables</th><td class="where">Files &amp; exceptions › Writing variables</td><td>save_variables() / load_variables() and by-hand conversion</td></tr>
+<tr><th>Reading from a file</th><td class="where">Files &amp; exceptions › Text files</td><td>read(), readline(), readlines(), line by line</td></tr>
+<tr><th>Writing to a file</th><td class="where">Files &amp; exceptions › Text files</td><td>Write what you type with input() into diary.txt</td></tr>
+<tr><th>Directories</th><td class="where">Files &amp; exceptions › Directories</td><td>os.getcwd, listdir, makedirs, rename, walk, rmtree; file explorer</td></tr>
+<tr><th>Pickling</th><td class="where">Files &amp; exceptions › Pickling</td><td>Pickle any value and see the bytes as a hex dump, pickle Student objects</td></tr>
+<tr><th>Handling the ZeroDivisionError exception</th><td class="where">Files &amp; exceptions › Exceptions</td><td>safe_divide() flow showing which of try / except / else / finally run</td></tr>
+<tr><th>Using try-except blocks</th><td class="where">Files &amp; exceptions › Exceptions</td><td>Multiple except clauses, failing silently with pass, raise</td></tr>
+<tr><th>The else block</th><td class="where">Files &amp; exceptions › Exceptions</td><td>else runs only without an exception (flow highlight and cells)</td></tr>
+<tr><th>Handling the FileNotFoundError exception</th><td class="where">Files &amp; exceptions › Exceptions</td><td>read_or_explain(path) and the multiple-files cell</td></tr>
+<tr><th>Concept of regular expression</th><td class="where">Regular expressions › Concept &amp; syntax</td><td>Metacharacter table, raw strings, compile</td></tr>
+<tr><th>Various types of regular expressions</th><td class="where">Regular expressions › Groups, sub &amp; split</td><td>Groups, named groups, greedy vs lazy, sub, split, flags</td></tr>
+<tr><th>Using match function</th><td class="where">Regular expressions › match, search &amp; validation</td><td>match vs search vs fullmatch, form validation, input loop</td></tr>
+<tr><th>Web scraping by using regular expressions</th><td class="where">Regular expressions › Web scraping</td><td>scrape() and scrape_products() on a sample shop page and on this site itself</td></tr>
+</tbody></table>
+
+    <h3>List of practicals</h3>
+    <table>
+        <thead><tr><th>#</th><th>Aim</th><th>File</th><th>Unit · CO</th></tr></thead>
+        <tbody>
+            <tr><th>1</th><td>Program to enter two numbers and print the arithmetic operations like +, -, *, /, // and %.</td><td><code>p01_arithmetic.py</code></td><td>I · CO1</td></tr>
+<tr><th>2</th><td>Write a program to find whether an inputted number is perfect or not.</td><td><code>p02_perfect.py</code></td><td>II · CO2</td></tr>
+<tr><th>3</th><td>Write a program to check if the entered number is Armstrong or not.</td><td><code>p03_armstrong.py</code></td><td>II · CO2</td></tr>
+<tr><th>4</th><td>Write a program to find factorial of the entered number.</td><td><code>p04_factorial.py</code></td><td>II · CO2</td></tr>
+<tr><th>5</th><td>Write a program to enter the number of terms and to print the Fibonacci series.</td><td><code>p05_fibonacci.py</code></td><td>II · CO2</td></tr>
+<tr><th>6</th><td>Write a program to enter the string and to check if it's palindrome or not using loop.</td><td><code>p06_palindrome.py</code></td><td>III · CO4</td></tr>
+<tr><th>7</th><td>Recursively find the factorial of a natural number.</td><td><code>p07_recursive_factorial.py</code></td><td>IV · CO3</td></tr>
+<tr><th>8</th><td>Read a file line by line and print it.</td><td><code>p08_read_lines.py</code></td><td>VI · CO6</td></tr>
+<tr><th>9</th><td>Remove all the lines that contain the character "a" in a file and write it into another file.</td><td><code>p09_remove_a_lines.py</code></td><td>VI · CO6</td></tr>
+<tr><th>10</th><td>Read a text file and display the number of vowels / consonants / uppercase / lowercase characters in the file.</td><td><code>p10_char_count.py</code></td><td>VI · CO6</td></tr>
+<tr><th>11</th><td>Create a binary file with name and roll no. Search for a given roll number and display the name, if not found display appropriate message.</td><td><code>p11_binary_roll.py</code></td><td>VI · CO6</td></tr>
+<tr><th>12</th><td>Write a random number generator that generates random numbers between 1 and 6 (simulates a dice).</td><td><code>p12_dice.py</code></td><td>II · CO2</td></tr>
+<tr><th>13</th><td>Write a python program to implement a stack using a list data structure.</td><td><code>p13_stack.py</code></td><td>V · CO4 · CO5</td></tr>
+<tr><th>14</th><td>Take a sample of ten phishing e-mails (any text file) and find most common words.</td><td><code>p14_phishing_words.py</code></td><td>VI · CO4 · CO6</td></tr>
+<tr><th>15</th><td>Read a text file line by line and display each word separated by a #.</td><td><code>p15_hash_words.py</code></td><td>VI · CO6</td></tr>
+
+        </tbody>
+    </table>
+</section>
+
+<!-- ============ 13 CODE ============ -->
+<section class="chapter">
+    <p class="kicker">13 · Code walkthrough</p>
+    <h2>How the important parts work</h2>
+    <h3>Running a program in the worker</h3>
+    <div class="walk">
+        <pre><span class="file">py-worker.js · lines 18–45</span>def _pb_run(code, stdin, filename, as_file):
+    buf = io.StringIO()
+    lines = list(stdin)
+
+    def fake_input(prompt=&#x27;&#x27;):
+        buf.write(str(prompt))
+        if not lines:
+            raise EOFError(&#x27;the program asked for more input than you typed in the Input box&#x27;)
+        value = lines.pop(0)
+        buf.write(value + &#x27;\\n&#x27;)
+        return value
+
+    saved = sys.stdout, sys.stderr, builtins.input
+    sys.stdout = sys.stderr = buf
+    builtins.input = fake_input
+    error = None
+    try:
+        if as_file:
+            runpy.run_path(filename, run_name=&#x27;__main__&#x27;)
+        else:
+            exec(compile(code, filename, &#x27;exec&#x27;), {&#x27;__name__&#x27;: &#x27;__main__&#x27;})
+    except SystemExit:
+        pass
+    except BaseException as err:
+        error = _pb_trim(err)
+    finally:
+        sys.stdout, sys.stderr, builtins.input = saved
+    return json.dumps({&#x27;out&#x27;: buf.getvalue(), &#x27;error&#x27;: error, &#x27;left&#x27;: len(lines)})</pre>
+        <div>
+            <p>Every run goes through this Python function inside the worker. It points <code>sys.stdout</code> and <code>sys.stderr</code> at one <code>StringIO</code>, so prints and errors appear in the order they happened.</p>
+            <p><code>input()</code> is replaced with <code>fake_input</code>, which writes the prompt, takes the next line from the Input box and echoes it, the way a terminal shows what you typed. If the program asks for more input than was given it raises EOFError with a clear message instead of hanging.</p>
+            <p>Practicals run as files with <code>runpy.run_path(..., run_name='__main__')</code>, so their <code>if __name__ == "__main__"</code> block runs exactly as with <code>python p01.py</code>. Tracebacks are trimmed so they show only your code, not the runner.</p>
+        </div>
+    </div>
+    <h3>Timeouts</h3>
+    <div class="walk">
+        <pre><span class="file">py.js · lines 41–52</span>function post(type, payload, timeout) {
+    const id = ++seq;
+    return new Promise((resolve, reject) =&gt; {
+        const timer = setTimeout(() =&gt; {
+            pending.delete(id);
+            restart(`stopped after ${timeout / 1000} s, probably an infinite loop`);
+            reject(new Error(`TimeoutError: the program was stopped after ${timeout / 1000} seconds (infinite loop?). Python was restarted.`));
+        }, timeout);
+        pending.set(id, { resolve, reject, timer });
+        worker.postMessage({ id, type, ...payload });
+    });
+}</pre>
+        <div>
+            <p>Python in a worker can't be interrupted unless the server sends special headers, which GitHub Pages doesn't. So each request gets a timer. If it fires, the worker is terminated and a fresh one starts, and the cell shows a TimeoutError. The timer only starts after Python has loaded, so a slow first download is never mistaken for an infinite loop.</p>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h3>The expression stepper</h3>
+    <div class="walk">
+        <pre><span class="file">unit1_basics.py · lines 81–126</span>def evaluation_steps(expression):
+    &quot;&quot;&quot;Evaluates an arithmetic expression one operator at a time, in the order
+    Python does it (PEMDAS + left-to-right, ** right-to-left). Returns the steps.&quot;&quot;&quot;
+    tree = ast.parse(expression, mode=&quot;eval&quot;)
+    steps = []
+
+    def walk(node):
+        if isinstance(node, ast.Constant):
+            return node.value
+        if isinstance(node, ast.BinOp):
+            left = walk(node.left)
+            right = walk(node.right)
+            result = eval(f&quot;{left!r} {OPS[type(node.op)]} {right!r}&quot;)
+            steps.append(f&quot;{left!r} {OPS[type(node.op)]} {right!r} = {result!r}&quot;)
+            return result
+        if isinstance(node, ast.UnaryOp):
+            operand = walk(node.operand)
+            result = eval(f&quot;{OPS[type(node.op)]}{operand!r}&quot;)
+            steps.append(f&quot;{OPS[type(node.op)]}{operand!r} = {result!r}&quot;)
+            return result
+        if isinstance(node, ast.BoolOp):
+            value = walk(node.values[0])
+            word = OPS[type(node.op)]
+            for nxt in node.values[1:]:
+                if (word == &quot;and&quot; and not value) or (word == &quot;or&quot; and value):
+                    steps.append(f&quot;{value!r} {word} ... = {value!r} (short-circuit, right side never runs)&quot;)
+                    return value
+                right = walk(nxt)
+                result = (value and right) if word == &quot;and&quot; else (value or right)
+                steps.append(f&quot;{value!r} {word} {right!r} = {result!r}&quot;)
+                value = result
+            return value
+        if isinstance(node, ast.Compare):
+            left = walk(node.left)
+            result = True
+            for op, comp in zip(node.ops, node.comparators):
+                right = walk(comp)
+                ok = eval(f&quot;{left!r} {OPS[type(op)]} {right!r}&quot;)
+                steps.append(f&quot;{left!r} {OPS[type(op)]} {right!r} = {ok!r}&quot;)
+                result = result and ok
+                left = right
+            return result
+        raise ValueError(&quot;only numbers, operators and brackets please&quot;)
+
+    result = walk(tree.body)
+    return steps, result</pre>
+        <div>
+            <p><code>ast.parse(..., mode="eval")</code> turns the expression into a tree that already follows Python's precedence rules, so <code>2 + 3 * 4</code> becomes Add(2, Mult(3, 4)). Walking the tree depth first and recording each operator as it is evaluated gives the steps in the order Python really uses.</p>
+            <p><code>and</code> / <code>or</code> are handled separately to show short-circuiting: when the left side already decides the answer, the right side is never walked, so <code>0 and 1 / 0</code> doesn't raise. Only literals and operators are accepted, so the tool can't be used to run other code.</p>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h3>The loop tracer</h3>
+    <div class="walk">
+        <pre><span class="file">unit2_control.py · lines 188–213</span>def trace(source, max_steps=200):
+    &quot;&quot;&quot;Runs a small program and records every line executed with the variables
+    at that moment (and what was printed so far). The loop tracer on the site uses it.&quot;&quot;&quot;
+    steps = []
+    code = compile(source, &quot;&lt;tracer&gt;&quot;, &quot;exec&quot;)
+    printed = io.StringIO()
+
+    def tracer(frame, event, arg):
+        if frame.f_code.co_filename != &quot;&lt;tracer&gt;&quot;:
+            return tracer
+        if event == &quot;line&quot;:
+            names = {k: v for k, v in frame.f_locals.items() if not k.startswith(&quot;__&quot;) and isinstance(v, (int, float, str, bool, list, tuple))}
+            steps.append((frame.f_lineno, {k: repr(v) for k, v in names.items()}, printed.getvalue()))
+            if len(steps) &gt;= max_steps:
+                raise RuntimeError(f&quot;stopped after {max_steps} steps (infinite loop?)&quot;)
+        return tracer
+
+    scope = {&quot;__builtins__&quot;: __builtins__}
+    sys.settrace(tracer)
+    try:
+        with redirect_stdout(printed):
+            exec(code, scope)
+    finally:
+        sys.settrace(None)
+    steps.append((None, steps[-1][1] if steps else {}, printed.getvalue()))
+    return steps</pre>
+        <div>
+            <p><code>sys.settrace</code> makes Python call <code>tracer</code> for events in every frame. For each "line" event in the traced program it stores the line number, a copy of the simple local variables and the output printed so far. That is a dry run on paper, done by Python itself.</p>
+            <p>A step limit stops infinite loops with a clear message, and the tracer is always removed in <code>finally</code>. The page then lets you move through the steps and highlights the variable that changed.</p>
+        </div>
+    </div>
+    <h3>The recursion tree</h3>
+    <div class="walk">
+        <pre><span class="file">unit4_functions.py · lines 120–137</span>def call_tree(name, n):
+    &quot;&quot;&quot;Records the recursion tree of factorial / fib so the site can draw it.
+    Each node is [label, result, children].&quot;&quot;&quot;
+    def fact_node(k):
+        if k &lt;= 1:
+            return [f&quot;fact({k})&quot;, 1, []]
+        child = fact_node(k - 1)
+        return [f&quot;fact({k})&quot;, k * child[1], [child]]
+
+    def fib_node(k):
+        if k &lt; 2:
+            return [f&quot;fib({k})&quot;, k, []]
+        a, b = fib_node(k - 1), fib_node(k - 2)
+        return [f&quot;fib({k})&quot;, a[1] + b[1], [a, b]]
+
+    if name == &quot;fib&quot;:
+        return fib_node(min(n, 7))
+    return fact_node(min(n, 10))</pre>
+        <div>
+            <p>The tree is built by the same recursion it shows: each call returns [label, result, children]. The JavaScript only draws it. Leaves are placed left to right and each parent is centred over its children. n is capped so the fib tree stays readable (fib(7) already has 41 calls).</p>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h3>Sparse matrix and data hiding</h3>
+    <div class="walk">
+        <pre><span class="file">unit3_data.py · lines 137–158</span>class SparseMatrix:
+    &quot;&quot;&quot;A matrix that stores only non-zero cells in a dict keyed by (row, col).&quot;&quot;&quot;
+
+    def __init__(self, rows, cols):
+        self.rows, self.cols = rows, cols
+        self.cells = {}
+
+    def __setitem__(self, pos, value):
+        if value:
+            self.cells[pos] = value
+        else:
+            self.cells.pop(pos, None)
+
+    def __getitem__(self, pos):
+        return self.cells.get(pos, 0)
+
+    def dense(self):
+        return [[self[r, c] for c in range(self.cols)] for r in range(self.rows)]
+
+    def saving(self):
+        total = self.rows * self.cols
+        return f&quot;{len(self.cells)} of {total} cells stored ({100 - 100 * len(self.cells) // total}% saved)&quot;</pre>
+        <div>
+            <p><code>__setitem__</code> and <code>__getitem__</code> let the class be used like a matrix: <code>m[2, 3] = 7</code>. Only non-zero cells are kept in the dictionary; setting a cell to 0 removes it, and <code>get(pos, 0)</code> supplies the zeros.</p>
+        </div>
+    </div>
+    <div class="walk">
+        <pre><span class="file">unit5_oop.py · lines 46–66</span>class BankAccount:
+    def __init__(self, owner, balance=0):
+        self.owner = owner
+        self._history = []  # one underscore: &quot;internal, please don&#x27;t touch&quot;
+        self.__balance = balance  # two underscores: name mangled to _BankAccount__balance
+
+    @property
+    def balance(self):
+        return self.__balance
+
+    def deposit(self, amount):
+        if amount &lt;= 0:
+            raise ValueError(&quot;deposit must be positive&quot;)
+        self.__balance += amount
+        self._history.append((&quot;deposit&quot;, amount))
+
+    def withdraw(self, amount):
+        if amount &gt; self.__balance:
+            raise ValueError(f&quot;insufficient balance ({self.__balance})&quot;)
+        self.__balance -= amount
+        self._history.append((&quot;withdraw&quot;, amount))</pre>
+        <div>
+            <p><code>__balance</code> is stored as <code>_BankAccount__balance</code>, so <code>acc.__balance</code> from outside fails. The read-only <code>balance</code> property and the two methods are the only way in, and they validate the amount. This is encapsulation.</p>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h3>A MailGuard rule</h3>
+    <div class="walk">
+        <pre><span class="file">mailguard.py · lines 100–119</span>class LinkRule(Rule):
+    name = &quot;suspicious link&quot;
+    weight = 12
+    SHORTENERS = (&quot;bit.ly&quot;, &quot;tinyurl.com&quot;, &quot;t.co&quot;, &quot;rb.gy&quot;, &quot;cutt.ly&quot;, &quot;is.gd&quot;)
+
+    def check(self, mail):
+        findings = []
+        for url in mail.urls:
+            host = re.sub(r&quot;^https?://&quot;, &quot;&quot;, url).split(&quot;/&quot;)[0].lower()
+            if re.fullmatch(PATTERNS[&quot;IPv4 address&quot;], host.split(&quot;:&quot;)[0]):
+                findings.append(self.hit(f&quot;link to a bare IP address {host}&quot;, 20))
+            elif host.endswith(self.SHORTENERS):
+                findings.append(self.hit(f&quot;shortened link hides the real site ({host})&quot;))
+            elif &quot;@&quot; in url:
+                findings.append(self.hit(&quot;&#x27;@&#x27; inside a URL, the part before it is ignored by the browser&quot;, 18))
+            elif url.startswith(&quot;http://&quot;):
+                findings.append(self.hit(f&quot;not encrypted (http) {host}&quot;, 6))
+            if host.count(&quot;-&quot;) &gt;= 2 or re.search(r&quot;(login|secure|verify|update|account)[\w-]*\.&quot;, host):
+                findings.append(self.hit(f&quot;domain made to look official ({host})&quot;, 10))
+        return findings</pre>
+        <div>
+            <p>LinkRule overrides <code>check()</code>. For each URL found with the shared URL pattern it takes the host and checks, in order: a bare IP address (20 points), a link shortener, an <code>@</code> inside the URL (the browser ignores everything before it), or plain http. Separately it checks for hosts built to look official (<code>login-</code>, <code>secure-</code>, many hyphens).</p>
+            <p>Each problem becomes a <code>Finding</code> with a readable reason, so the score can always be explained.</p>
+        </div>
+    </div>
+    <div class="walk">
+        <pre><span class="file">mailguard.py · lines 193–236</span>class MailGuard:
+    def __init__(self, rules=None):
+        self.__rules = list(rules) if rules else [UrgencyRule(), CredentialRule(), LinkRule(), SenderRule(), MoneyRule(), AttachmentRule()]
+
+    @property
+    def rules(self):
+        return [r.name for r in self.__rules]
+
+    def analyse(self, mail):
+        findings = []
+        for rule in self.__rules:
+            findings.extend(rule.check(mail))
+        return Report(mail, findings)
+
+    def analyse_folder(self, folder):
+        reports, errors = [], []
+        for name in sorted(os.listdir(folder)):
+            if not name.endswith((&quot;.txt&quot;, &quot;.eml&quot;)):
+                continue
+            try:
+                reports.append(self.analyse(Mail.from_file(os.path.join(folder, name))))
+            except (OSError, UnicodeDecodeError) as err:
+                errors.append(f&quot;{name}: {err}&quot;)
+        return sorted(reports, reverse=True), errors
+
+    @staticmethod
+    def common_words(mails, n=10):
+        counter = Counter()
+        for mail in mails:
+            counter.update(mail.words())
+        return counter.most_common(n)
+
+    @staticmethod
+    def save(reports, path):
+        with open(path, &quot;wb&quot;) as f:
+            pickle.dump([(r.mail, r.score, r.verdict, [repr(x) for x in r.findings]) for r in reports], f)
+
+    @staticmethod
+    def load(path):
+        try:
+            with open(path, &quot;rb&quot;) as f:
+                return pickle.load(f)
+        except FileNotFoundError:
+            return []</pre>
+        <div>
+            <p>The rules can be passed in, which is how the notebook and the tests add their own subclass. <code>analyse_folder()</code> combines directories, files, exceptions and sorting: reports compare by score through <code>Report.__lt__</code>.</p>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h3>Scraping product cards</h3>
+    <div class="walk">
+        <pre><span class="file">unit6_files.py · lines 183–186</span>def scrape_products(html):
+    &quot;&quot;&quot;Each product card on the sample shop page becomes a (name, price, rating) tuple.&quot;&quot;&quot;
+    rx = re.compile(r&#x27;&lt;div class=&quot;product&quot;&gt;.*?&lt;h3&gt;(.*?)&lt;/h3&gt;.*?₹\s?([\d,]+).*?data-rating=&quot;([\d.]+)&quot;&#x27;, re.S)
+    return [(name, int(price.replace(&quot;,&quot;, &quot;&quot;)), float(rating)) for name, price, rating in rx.findall(html)]</pre>
+        <div>
+            <p>One compiled pattern with three groups matches a whole product card: the name in <code>&lt;h3&gt;</code>, the price after ₹ and the <code>data-rating</code> attribute. <code>.*?</code> is lazy, so each match stops at the first card's end instead of swallowing the page, and <code>re.S</code> lets <code>.</code> cross newlines.</p>
+        </div>
+    </div>
+    <h3>The code editor</h3>
+    <div class="walk">
+        <pre><span class="file">cell.js · lines 43–78</span>export function editor(code, { onRun, rows } = {}) {
+    const pre = h(&#x27;pre&#x27;, { class: &#x27;ed__hl&#x27;, &#x27;aria-hidden&#x27;: &#x27;true&#x27; });
+    const area = h(&#x27;textarea&#x27;, { class: &#x27;ed__area&#x27;, spellcheck: false, autocapitalize: &#x27;off&#x27;, autocomplete: &#x27;off&#x27;, &#x27;aria-label&#x27;: &#x27;Python code&#x27; });
+    area.value = code;
+    const gutter = h(&#x27;div&#x27;, { class: &#x27;ed__gutter&#x27;, &#x27;aria-hidden&#x27;: &#x27;true&#x27; });
+    const wrap = h(&#x27;div&#x27;, { class: &#x27;ed&#x27; }, gutter, h(&#x27;div&#x27;, { class: &#x27;ed__box&#x27; }, pre, area));
+    const paint = () =&gt; {
+        pre.innerHTML = highlight(area.value);
+        const n = area.value.split(&#x27;\n&#x27;).length;
+        gutter.textContent = Array.from({ length: n }, (_, i) =&gt; i + 1).join(&#x27;\n&#x27;);
+        area.style.height = &#x27;auto&#x27;;
+        area.style.height = `${Math.max(area.scrollHeight, (rows ?? 3) * 20 + 20)}px`;
+    };
+    area.addEventListener(&#x27;input&#x27;, paint);
+    area.addEventListener(&#x27;keydown&#x27;, (e) =&gt; {
+        if (e.key === &#x27;Enter&#x27; &amp;&amp; (e.metaKey || e.ctrlKey)) { e.preventDefault(); onRun?.(); return; }
+        if (e.key === &#x27;Tab&#x27; &amp;&amp; !e.shiftKey) {
+            e.preventDefault();
+            area.setRangeText(&#x27;    &#x27;, area.selectionStart, area.selectionEnd, &#x27;end&#x27;);
+            paint();
+        }
+        if (e.key === &#x27;Enter&#x27;) {
+            // keep indentation, and indent one more level after a colon
+            const before = area.value.slice(0, area.selectionStart);
+            const line = before.slice(before.lastIndexOf(&#x27;\n&#x27;) + 1);
+            let indent = line.match(/^\s*/)[0];
+            if (/:\s*(#.*)?$/.test(line)) indent += &#x27;    &#x27;;
+            e.preventDefault();
+            area.setRangeText(&#x27;\n&#x27; + indent, area.selectionStart, area.selectionEnd, &#x27;end&#x27;);
+            paint();
+        }
+    });
+    requestAnimationFrame(paint);
+    paint();
+    return { el: wrap, get value() { return area.value; }, set value(v) { area.value = v; paint(); }, area };
+}</pre>
+        <div>
+            <p>A plain textarea can't colour text, so the editor puts a highlighted <code>&lt;pre&gt;</code> exactly underneath a transparent textarea with the same font and padding. You type into the textarea and see the colours from the layer below, which is repainted on every input.</p>
+            <p>Enter keeps the indentation and adds a level after a colon, Tab inserts four spaces and Ctrl + Enter runs the cell, which makes it comfortable for Python.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ============ 14 TESTING ============ -->
+<section class="chapter">
+    <p class="kicker">14 · Testing</p>
+    <h2>What was checked</h2>
+    <p class="lead">Four kinds of tests were run. Unit tests ran on the Python code on my laptop. An automated browser opened every page and tab and pressed every Run button. Full user flows were run in the browser. And the notebook was executed from start to end.</p>
+    <h3>1. Unit tests (python -m unittest, Python 3.14)</h3>
+    <table>
+        <thead><tr><th>Test class</th><th>What is checked</th><th>Tests</th><th>Result</th></tr></thead>
+        <tbody>
+            <tr><th>Unit1</th><td>name rules (keyword, digit, hyphen, built-in), stepper result equals Python's for <code>2 + 3 * 4 ** 2 // 5</code>, ** is right to left (512), short-circuit, NameError, literal types</td><td>4</td><td class="ok">Pass</td></tr>
+            <tr><th>Unit2</th><td>clock wrap, −7 % 3 = 2, truth table of a and not b, unknown names rejected, grades and ticket prices, leap years 2000 / 1900, Collatz, primes, patterns, guess game, seeded dice repeat, π within 0.05, tracer</td><td>6</td><td class="ok">Pass</td></tr>
+            <tr><th>Unit3</th><td>slices and their indices, find / count, comparison, list parameters change the caller (and doubled() doesn't), transpose, swap, min_max_avg, tuple TypeError, word count, sparse matrix removes zeros, alias / shallow / deep, sets, stable sort, bubble sort</td><td>6</td><td class="ok">Pass</td></tr>
+            <tr><th>Unit4</th><td>conversion errors, coercion, defaults / keywords / *args, nonlocal scope, factorial with error for −1, fib, fib_memo(80), fast power 3¹³, Hanoi(5) = 31 moves, digit sum, call counts 21,891 vs fewer than 40</td><td>3</td><td class="ok">Pass</td></tr>
+            <tr><th>Unit5</th><td>Student average and validation, attributes, hidden balance not reachable as <code>__balance</code>, overdraw refused, areas of four shapes, MRO, abstract area raises, impossible triangle, Vector operators, Calculator.add</td><td>4</td><td class="ok">Pass</td></tr>
+            <tr><th>Unit6</th><td>write / append / three reads, variables round trip, directories, pickle round trip starts with 0x80, every exception path, regex emails / dates / mobiles, password and pin validation, scraping a snippet</td><td>6</td><td class="ok">Pass</td></tr>
+            <tr><th>Practicals</th><td>perfect numbers below 10,000 are exactly 6, 28, 496, 8128; Armstrong numbers below 1,000; loop and recursive factorial agree; Fibonacci; palindromes; files (missing file message, no "a" left in the kept file); character counts; binary file search found / not found / missing file; dice covers 1–6; stack and brackets; top word "refund"</td><td>11</td><td class="ok">Pass</td></tr>
+            <tr><th>MailGuard</th><td>header parsing, all 10 phishing mails caught and sorted, all 4 normal mails pass, IP link and look-alike domain found, custom rule subclass and hidden rules, common words, pickle save / load and missing file</td><td>6</td><td class="ok">Pass</td></tr>
+        </tbody>
+    </table>
+    <pre class="term"><span class="file">$ python -m unittest discover -s tests -t .</span>..............................................
+----------------------------------------------------------------------
+Ran 46 tests in 0.648s
+
+OK</pre>
+</section>
+
+<section>
+    <h3>2. Every page and tab in a browser</h3>
+    <p>A script drove Chromium with Playwright. It opened all 15 pages and all 49 tabs, clicked every Run button it could see, and recorded JavaScript errors, console errors and any cell that ended with a Python error. There were no JavaScript or console errors. Twelve cells ended with a Python error, and every one of them is meant to fail as a teaching example: NameError for <code>Score</code>, str + int, an index past the end, a missing dictionary key, int("nineteen"), a missing argument (twice), the RecursionError demo, a missing attribute, an overdraw, a missing folder and an uncaught <code>raise</code>.</p>
+    <p>Looking at the screenshots found real bugs, which I fixed:</p>
+    <ul>
+        <li>Equal marks were sorted in reverse name order when sorting high to low. Fixed by sorting by name first and relying on <code>sorted()</code> being stable.</li>
+        <li>The cell input box dropped a trailing empty line, so the "write what you type" program never got its empty line to stop.</li>
+        <li>An indent-only line in the shell didn't end a block.</li>
+        <li>The font's ligatures drew <code>==</code> as one long symbol.</li>
+        <li>True / False showed as JSON's true / false.</li>
+        <li>The factorial tree was stretched to the full width.</li>
+        <li>Bar charts with the default colour were drawn empty, because the colour variable was set to the text "undefined".</li>
+        <li>Practical 14 counted header words like "com" and "gmail".</li>
+        <li>Every line of the sample text contained an "a", so practical 9 kept nothing.</li>
+    </ul>
+    <h3>3. User flows</h3>
+    <table>
+        <thead><tr><th>Flow</th><th>Done in the browser</th><th>Result</th></tr></thead>
+        <tbody>
+            <tr><th>Lab record</th><td>"Run all 15" on the Lab record page</td><td class="ok">15 of 15 recorded with correct output</td></tr>
+            <tr><th>Python shell</th><td>assignment, expression echo, a for block and a def block typed with auto-indent, calling the function, 1/0</td><td class="ok">42, loop output, 441, ZeroDivisionError traceback</td></tr>
+            <tr><th>MailGuard</th><td>paste a new mail and analyse it</td><td class="ok">scored 66, phishing, with reasons</td></tr>
+            <tr><th>Infinite loop</th><td><code>while True: pass</code> in a cell</td><td class="ok">stopped after 10.1 s, Python restarted, the next cell ran normally</td></tr>
+            <tr><th>Phone width</th><td>every page at 390 px wide</td><td class="ok">no horizontal scrolling on any page</td></tr>
+            <tr><th>Notebook</th><td>all 10 code cells executed in order (pandas + matplotlib in Pyodide)</td><td class="ok">no errors, 3 charts</td></tr>
+        </tbody>
+    </table>
+    <div class="grid3">
+        <figure class="fig-phone"><img src="images/m-home.png" alt=""><figcaption><b>Fig. 99</b> · <b>Phone: home.</b></figcaption></figure>
+        <figure class="fig-phone"><img src="images/m-prac.png" alt=""><figcaption><b>Fig. 100</b> · <b>Phone: practical 5.</b></figcaption></figure>
+        <figure class="fig-phone"><img src="images/m-mail.png" alt=""><figcaption><b>Fig. 101</b> · <b>Phone: MailGuard.</b></figcaption></figure>
+    </div>
+</section>
+
+<!-- ============ 15 DEPLOYMENT ============ -->
+<section class="chapter">
+    <p class="kicker">15 · Deployment and conclusion</p>
+    <h2>Online and what I learned</h2>
+    <h3>Deployment</h3>
+    <p>The code is in a public GitHub repository and GitHub Pages serves it straight from the main branch. There is no build step, so the files in the repository are exactly what the browser loads, including the <code>.py</code> files that Pyodide runs.</p>
+    <table>
+        <tbody>
+            <tr><th>Live site</th><td><a href="https://lushadowx.github.io/PyBench/">https://lushadowx.github.io/PyBench/</a></td></tr>
+            <tr><th>Source code</th><td><a href="https://github.com/LuShadowX/PyBench">https://github.com/LuShadowX/PyBench</a></td></tr>
+            <tr><th>Notebook</th><td><code>notebooks/mailguard_analysis.ipynb</code> (Kaggle: File → Import notebook, turn Internet on)</td></tr>
+            <tr><th>Run the site locally</th><td><code>python -m http.server 8000</code> in the project folder, then open <code>http://localhost:8000</code></td></tr>
+            <tr><th>Run the Python locally</th><td><code>cd python</code>, then <code>python -m pybench</code>, <code>python practicals/p05_fibonacci.py</code> or <code>python -m unittest discover -s tests -t .</code></td></tr>
+        </tbody>
+    </table>
+    <pre class="term"><span class="file">$ python -m pybench</span>PyBench 1.0  |  Python 3.14.7
+...
+pybench&gt; p2
+Enter a number: 496
+Proper divisors: 1 + 2 + 4 + 8 + 16 + 31 + 62 + 124 + 248 = 496
+496 is a perfect number
+
+pybench&gt; q</pre>
+    <h3>What I learned</h3>
+    <ul>
+        <li><b>Python can explain itself.</b> The <code>ast</code> module shows how an expression is grouped, and <code>sys.settrace</code> shows which line runs next. Building the stepper and the tracer taught me the order of operations and loops better than reading about them.</li>
+        <li><b>Aliasing is easy to get wrong.</b> <code>[[0] * 2] * 2</code> gives the same inner list twice. I hit it myself before I made the aliasing tab.</li>
+        <li><b>Stable sorting is useful.</b> Sorting by name first and then by marks keeps ties in alphabetical order, which fixed a real bug in the sorting tool.</li>
+        <li><b>Inheritance pays off when things get added.</b> Adding a new MailGuard rule is just a subclass with one method, and nothing else changes. That is what polymorphism is for.</li>
+        <li><b>Files and exceptions belong together.</b> Almost every file operation needed a try / except somewhere: a missing file, an unreadable mail, a pickle that isn't there yet.</li>
+        <li><b>Regex is great for known formats and fragile for everything else.</b> The scraper works on the sample shop page because I know its layout; a real site would need an HTML parser.</li>
+    </ul>
+    <h3>Possible extensions</h3>
+    <ul>
+        <li>Test MailGuard on a public phishing dataset and learn the rule weights from it.</li>
+        <li>Save the in-browser files to the browser's storage so they survive a reload.</li>
+        <li>Exercises with hidden tests that check the student's own code in a cell.</li>
+    </ul>
+</section>
+
+</body>
+</html>
